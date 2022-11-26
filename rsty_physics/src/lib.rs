@@ -27,31 +27,31 @@ pub fn add(left: usize, right: usize) -> usize {
 }
 
 // Note that this function is "private" and our tests can still access it.
-fn divide(a: u32, b:u32) -> u32{
-    if b == 0{
+fn divide(a: u32, b: u32) -> u32 {
+    if b == 0 {
         panic!("Cannot divide by zero");
     }
 
-    a/b
+    a / b
 }
 
 #[cfg(test)]
 mod tests {
     use godot::engine::utilities::{sin, sqrt};
     // use godot::prelude::utilities::sin;
-    use super::Rectangle;
     use super::add;
     use super::divide;
     use super::main_scene;
+    use super::Rectangle;
 
     #[test]
-    fn larger_can_hold_smaller(){
-        let larger = Rectangle{
+    fn larger_can_hold_smaller() {
+        let larger = Rectangle {
             width: 8,
             height: 7,
         };
 
-        let smaller = Rectangle{
+        let smaller = Rectangle {
             width: 5,
             height: 1,
         };
@@ -61,13 +61,11 @@ mod tests {
     /// These angles assume the "origin" angle is the one in question here.
     /// At the moment the godot functions are not working...
     #[test]
-    fn sin_30_degrees(){
-        let angle: f64  = 30.0;
+    fn sin_30_degrees() {
+        let angle: f64 = 30.0;
         // assert_eq!(sin(angle.to_radians()), 0.5);
         //  assert_eq!(sqrt(angle.to_radians()), 0.5);
-
     }
-
 }
 
 #[gdextension]

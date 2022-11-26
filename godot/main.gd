@@ -5,7 +5,7 @@ extends Main
 func _ready():
 	pass # Replace with function body.
 	super.new_game()
-	Math.cos()
+
 	cos(12)
 
 

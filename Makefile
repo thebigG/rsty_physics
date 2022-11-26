@@ -1,10 +1,14 @@
 .ONESHELL:
 
+
+nuke_images:
+	docker rmi -f $(docker images -aq)
+
 buid:
 	cd rsty_physics && cargo build
 
 build_image: 
-	docker build . -t rsty_physics:rsty_physics
+	docker build . --no-cache -t rsty_physics:rsty_physics
 
 login:
 	docker login

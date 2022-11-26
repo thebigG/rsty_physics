@@ -1,4 +1,3 @@
-
 // use crate::hud::Hud;
 // use crate::mob;
 // use crate::player;
@@ -7,8 +6,8 @@ use godot::engine::packed_scene::GenEditState;
 use godot::engine::{Marker2D, PathFollow2D, RigidBody2D, Timer};
 use godot::prelude::*;
 // use rand::Rng as _;
-use std::f64::consts::PI;
 use godot::private::You_forgot_the_attribute__godot_api;
+use std::f64::consts::PI;
 
 // Deriving GodotClass makes the class available to Godot
 #[derive(GodotClass)]
@@ -68,4 +67,3 @@ impl GodotExt for Main {
         println!("Hello World from Rust:{}", self.score);
     }
 }
-
