@@ -1,14 +1,14 @@
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+use godot::prelude::*;
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
-}
+struct RustyPhysics;
+
+mod main_scene;
+
+#[gdextension]
+unsafe impl ExtensionLibrary for RustyPhysics {}
