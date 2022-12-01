@@ -44,6 +44,17 @@ impl Main {
         //
         // self.music().play(0.0);
     }
+
+    #[func]
+    fn test_sin(&mut self, angle: f64, answer: f64) {
+        //Not sure if this is the "best" way to round numbers between 1.0 and 0.0, but it works.
+        assert_eq!((sin(angle.to_radians()) * 10.0).round(), answer * 10.0);
+    }
+
+    #[func]
+    fn full_circle_sin(&mut self) {
+        self.test_sin(30.0, 0.5);
+    }
 }
 
 #[godot_api]
@@ -65,9 +76,6 @@ impl GodotExt for Main {
         // self.mob_scene = load("res://Mob.tscn");
         // self.music = Some(self.base.get_node_as("Music"));
         // self.death_sound = Some(self.base.get_node_as("DeathSound"));
-        let angle: f64 = 30.0;
-        let answer = 0.5;
-        //Not sure if this is the "best" way to round numbers between 1.0 and 0.0, but it works.
-        assert_eq!((sin(angle.to_radians()) * 10.0).round(), answer * 10.0);
+        self.full_circle_sin();
     }
 }
