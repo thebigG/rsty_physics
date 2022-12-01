@@ -4,6 +4,9 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
+#![feature(cfg_eval)]
+#![feature(type_name_of_val)]
+use godot::engine::utilities::sin;
 use godot::prelude::*;
 
 struct RustyPhysics;
@@ -35,38 +38,56 @@ fn divide(a: u32, b: u32) -> u32 {
     a / b
 }
 
-#[cfg(test)]
-mod tests {
-    use godot::engine::utilities::{sin, sqrt};
-    // use godot::prelude::utilities::sin;
-    use super::add;
-    use super::divide;
-    use super::main_scene;
-    use super::Rectangle;
+//At the moment testing godot code the Rust way is not very trivial:https://github.com/godot-rust/gdextension/issues/36
+// #[cfg(test)]
+// mod tests {
+//     use godot::engine::utilities::{sin, sqrt};
+//     // use godot::prelude::utilities::sin;
+//     use super::add;
+//     use super::divide;
+//     use super::main_scene;
+//     use super::Rectangle;
+//     use godot::prelude::*;
 
-    #[test]
-    fn larger_can_hold_smaller() {
-        let larger = Rectangle {
-            width: 8,
-            height: 7,
-        };
+//     #[test]
+//     fn sin_30_degrees() {
+//         //  assert_eq!(sqrt(angle.to_radians()), 0.5);
+//           let mut t = Trig{};
+//           t.sin_30_degrees();
+//     }
 
-        let smaller = Rectangle {
-            width: 5,
-            height: 1,
-        };
-        assert!(larger.can_hold(&smaller));
-    }
+//     #[derive(GodotClass)]
+//     #[class(base=Node)]
+//     struct Trig{
 
-    /// These angles assume the "origin" angle is the one in question here.
-    /// At the moment the godot functions are not working...
-    #[test]
-    fn sin_30_degrees() {
-        let angle: f64 = 30.0;
-        // assert_eq!(sin(angle.to_radians()), 0.5);
-        //  assert_eq!(sqrt(angle.to_radians()), 0.5);
-    }
-}
+//     }
+
+//     #[test]
+//     fn larger_can_hold_smaller() {
+//         let larger = Rectangle {
+//             width: 8,
+//             height: 7,
+//         };
+
+//         let smaller = Rectangle {
+//             width: 5,
+//             height: 1,
+//         };
+//         assert!(larger.can_hold(&smaller));
+//     }
+
+//     #[cfg_attr(not(test), func)]
+//     #[godot_api]
+//     impl Trig{
+//         #[func]
+//         pub fn sin_30_degrees(&mut self) {
+//             let angle: f64 = 30.0;
+//             //  assert_eq!(sqrt(angle.to_radians()), 0.5);
+//               assert_eq!(sin(angle.to_radians().round()), 0.5);
+//         }
+//     }
+
+// }
 
 #[gdextension]
 unsafe impl ExtensionLibrary for RustyPhysics {}

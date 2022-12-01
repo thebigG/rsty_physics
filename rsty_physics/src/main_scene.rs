@@ -3,6 +3,7 @@
 // use crate::player;
 use godot::engine::node::InternalMode;
 use godot::engine::packed_scene::GenEditState;
+use godot::engine::utilities::sin;
 use godot::engine::{Marker2D, PathFollow2D, RigidBody2D, Timer};
 use godot::prelude::*;
 // use rand::Rng as _;
@@ -64,6 +65,9 @@ impl GodotExt for Main {
         // self.mob_scene = load("res://Mob.tscn");
         // self.music = Some(self.base.get_node_as("Music"));
         // self.death_sound = Some(self.base.get_node_as("DeathSound"));
-        println!("Hello World from Rust:{}", self.score);
+        let angle: f64 = 30.0;
+        let answer = 0.5;
+        //Not sure if this is the "best" way to round numbers between 1.0 and 0.0, but it works.
+        assert_eq!((sin(angle.to_radians()) * 10.0).round(), answer * 10.0);
     }
 }
