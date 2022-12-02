@@ -9,7 +9,6 @@ use godot::engine::{Marker2D, PathFollow2D, RigidBody2D, Timer};
 use godot::prelude::*;
 // use rand::Rng as _;
 use godot::private::You_forgot_the_attribute__godot_api;
-use std::backtrace::{self, Backtrace};
 use std::f64::consts::PI;
 
 // Deriving GodotClass makes the class available to Godot
@@ -54,9 +53,7 @@ impl Main {
 
         assert_eq!(
             format!("{:.1}", (sin(angle.to_radians()) * 10.0)),
-            format!("{:.1}", answer * 10.0),
-            "{}",
-            Backtrace::capture()
+            format!("{:.1}", answer * 10.0)
         );
     }
 
