@@ -11,6 +11,8 @@ use godot::prelude::*;
 use godot::private::You_forgot_the_attribute__godot_api;
 use std::f64::consts::PI;
 
+use godot::builtin::VariantType::PackedVector2Array;
+
 // Deriving GodotClass makes the class available to Godot
 #[derive(GodotClass)]
 #[class(base=Node)]
@@ -76,6 +78,14 @@ impl Main {
         self.test_sin(330.0, -0.5);
         self.test_sin(360.0, -f64::EPSILON);
     }
+
+    #[func]
+    fn draw_circle(&mut self) {
+        // let verticies = Vector2::new(10.0, 10.0);
+        //
+        // println!("{}", verticies);
+        // let circle = Polygon2D;
+    }
 }
 
 #[godot_api]
@@ -98,5 +108,6 @@ impl GodotExt for Main {
         // self.music = Some(self.base.get_node_as("Music"));
         // self.death_sound = Some(self.base.get_node_as("DeathSound"));
         self.full_circle_sin();
+        self.draw_circle();
     }
 }

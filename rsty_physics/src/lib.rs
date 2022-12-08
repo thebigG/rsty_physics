@@ -8,7 +8,7 @@ use godot::prelude::*;
 
 struct RustyPhysics;
 
-mod main_scene;
+mod trig;
 
 #[derive(Debug)]
 struct Rectangle {
