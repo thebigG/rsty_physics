@@ -10,31 +10,6 @@ struct RustyPhysics;
 
 mod trig;
 
-#[derive(Debug)]
-struct Rectangle {
-    width: u32,
-    height: u32,
-}
-
-impl Rectangle {
-    fn can_hold(&self, other: &Rectangle) -> bool {
-        self.width > other.width && self.height > other.height
-    }
-}
-
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
-}
-
-// Note that this function is "private" and our tests can still access it.
-fn divide(a: u32, b: u32) -> u32 {
-    if b == 0 {
-        panic!("Cannot divide by zero");
-    }
-
-    a / b
-}
-
 //At the moment testing godot code the Rust way is not very trivial:https://github.com/godot-rust/gdextension/issues/36
 // #[cfg(test)]
 // mod tests {

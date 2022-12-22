@@ -9,4 +9,5 @@ crate-type = ["cdylib"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-godot = { git = "https://github.com/godot-rust/gdextension", branch = "master" , features = ["minimal"]}
+#godot = { git = "https://github.com/godot-rust/gdextension", branch = "master" , features = ["minimal"]}
+godot = { path = "../../../godot", features = ["minimal"] }
