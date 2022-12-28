@@ -128,11 +128,11 @@ impl GodotExt for SineWave2D {
 
 // Deriving GodotClass makes the class available to Godot
 #[derive(GodotClass)]
-#[class(base=Node)]
+#[class(base=Node2D)]
 pub struct Main {
     score: i64,
     #[base]
-    base: Base<Node>,
+    base: Base<Node2D>,
 }
 #[godot_api]
 impl Main {
@@ -192,8 +192,9 @@ impl Main {
         self.test_sin(360.0, -f64::EPSILON);
     }
 
+    /// "draw_circle is a function in CanvasIem class. Don't want to override that."
     #[func]
-    fn draw_circle(&mut self) {
+    fn main_draw_circle(&mut self) {
         // let verticies = Vector2::new(10.0, 10.0);
         //
         // println!("{}", verticies);
@@ -203,7 +204,7 @@ impl Main {
 
 #[godot_api]
 impl GodotExt for Main {
-    fn init(base: Base<Node>) -> Self {
+    fn init(base: Base<Node2D>) -> Self {
         Main {
             // mob_scene: PackedScene::new(),
             score: 0,
@@ -222,6 +223,6 @@ impl GodotExt for Main {
         // self.death_sound = Some(self.base.get_node_as("DeathSound"));
         println!("Main...");
         self.full_circle_sin();
-        self.draw_circle();
+        self.main_draw_circle();
     }
 }

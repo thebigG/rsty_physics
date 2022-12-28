@@ -12,10 +12,33 @@ var y_axis = Line2D.new();
 var x_axis = Line2D.new();
 
 var Origin = Vector2(100,200);
-#var sin_wav = SineWave2D.new();
+var circle = Node2D.new()
+var obj = Sprite2D.new()
+
+var current_sinusoidal_output_val = 0
+var sin_step = 0.1  #radians
+var current_sin_input_val = 0
+var sin_output_scale = 50
+
+var sin_output_offset = Origin.y  # Added to sin_output
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+#	circle.transform.
+	circle.draw_circle(Vector2(0,0), 100, Color.RED)
+	circle.position = Vector2(Origin)
+	
+	
+	var image = Image.load_from_file("res://icon.svg")
+	var texture = ImageTexture.create_from_image(image)
+	
+	obj.texture = texture
+	obj.position = Origin
+	obj.scale = Vector2(0.3,0.3)
+	
+
+#	circle.transform
+	draw_line(Origin, Vector2(10,10), Color.REBECCA_PURPLE)
 	y_axis.default_color = Color(Color.YELLOW)
 	y_axis.default_color.a = 0.25
 	
@@ -39,6 +62,7 @@ func _ready():
 	add_child(cos_wave)
 	add_child(y_axis)
 	add_child(x_axis)
+	add_child(obj)
 
 func get_sin_full_circle_2dvectors(degrees_delta: int, scale: int, number_of_phases: int) -> Array:
 	var points = []
@@ -58,5 +82,10 @@ func get_cos_full_circle_2dvectors(degrees_delta: int, scale: int, number_of_pha
 		i += deg_to_rad(degrees_delta)
 	return points
 
+func _physics_process(delta):
+	current_sinusoidal_output_val = sin(current_sin_input_val) * sin_output_scale
+	obj.position.y = current_sinusoidal_output_val + sin_output_offset
+	current_sin_input_val += sin_step
+	
 func _process(delta):
 	pass
