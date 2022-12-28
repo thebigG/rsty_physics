@@ -2,9 +2,9 @@ extends Main
 
 #This draws a cos and sin wave.
 #At the moment SineWave is just a Line2D node.
-#This will probablyustay like this until https://github.com/godot-rust/gdextension/issues/55
+#This will probably stay like this until https://github.com/godot-rust/gdextension/issues/55
 #is resolved. Then all this code will be moved into
-# a rust gdextension; that it is  modular and scalable.
+#a rust gdextension; that it is  modular and scalable.
 var sin_wave = SineWave2D.new();
 var cos_wave = Line2D.new();
 
