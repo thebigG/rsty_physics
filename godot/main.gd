@@ -29,10 +29,10 @@ func _ready():
 	
 	sin_wave.default_color = Color.PURPLE
 	super.new_game()
-	sin_wave.points = get_sin_full_circle_2dvectors(30, 50)
+	sin_wave.points = get_sin_full_circle_2dvectors(30, 50, 4)
 	sin_wave.position = Origin
 
-	cos_wave.points = get_cos_full_circle_2dvectors(30, 50)
+	cos_wave.points = get_cos_full_circle_2dvectors(30, 50, 4)
 	cos_wave.position = Origin
 	
 	add_child(sin_wave)
@@ -40,19 +40,19 @@ func _ready():
 	add_child(y_axis)
 	add_child(x_axis)
 
-func get_sin_full_circle_2dvectors(degrees_delta: int, scale) -> Array:
+func get_sin_full_circle_2dvectors(degrees_delta: int, scale: int, number_of_phases: int) -> Array:
 	var points = []
 	var i = 0;
-	while i < 2 * PI:
+	while i < number_of_phases * PI:
 		var x = sin(i)
 		points.append(Vector2(i*scale, x*scale))
 		i += deg_to_rad(degrees_delta)
 	return points
 
-func get_cos_full_circle_2dvectors(degrees_delta: int, scale) -> Array:
+func get_cos_full_circle_2dvectors(degrees_delta: int, scale: int, number_of_phases: int ) -> Array:
 	var points = []
 	var i = 0;
-	while i < 2 * PI:
+	while i < number_of_phases * PI:
 		var x = cos(i)
 		points.append(Vector2(i*scale, x*scale))
 		i += deg_to_rad(degrees_delta)
