@@ -12,7 +12,7 @@ var y_axis = Line2D.new();
 var x_axis = Line2D.new();
 
 var Origin = Vector2(100,200);
-var circle = Node2D.new()
+
 var obj = Sprite2D.new()
 
 var current_sinusoidal_output_val = 0
@@ -24,11 +24,6 @@ var sin_output_offset = Origin.y  # Added to sin_output
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-#	circle.transform.
-	circle.draw_circle(Vector2(0,0), 100, Color.RED)
-	circle.position = Vector2(Origin)
-	
-	
 	var image = Image.load_from_file("res://icon.svg")
 	var texture = ImageTexture.create_from_image(image)
 	
