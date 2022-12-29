@@ -3,11 +3,11 @@ use std::borrow::Borrow;
 // use crate::mob;
 // use crate::player;
 // use backtrace::Backtrace;
+use godot::builtin::Vector2;
 use godot::engine::node::InternalMode;
 use godot::engine::packed_scene::GenEditState;
 use godot::engine::utilities::sin;
 use godot::engine::{Line2D, Marker2D, PathFollow2D, RigidBody2D, Timer};
-use godot::builtin::Vector2;
 use godot::prelude::*;
 // use rand::Rng as _;
 use godot::private::You_forgot_the_attribute__godot_api;
@@ -86,15 +86,14 @@ impl SineWave2D {
     }
 
     #[func]
-    fn draw_wave(&mut self)  {
+    fn draw_wave(&mut self) {
         println!("draw_wave1...");
 
         let mut points = Array::new();
         points;
 
-        points.append(Vector2::new(0.0,100.0));
+        points.append(Vector2::new(0.0, 100.0));
         let v = Vector2Array::from(&points);
-
 
         self.base.set_points(v)
     }
@@ -124,7 +123,6 @@ impl GodotExt for SineWave2D {
         // self.draw_circle();
     }
 }
-
 
 // Deriving GodotClass makes the class available to Godot
 #[derive(GodotClass)]
