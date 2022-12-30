@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://2iwow2iltxvs"]
+[gd_scene load_steps=3 format=3 uid="uid://2iwow2iltxvs"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_myfsw"]
+[ext_resource type="Script" path="res://sin_cos_anim.gd" id="2_t6ewo"]
 
-[node name="Main" type="Main"]
+[node name="SinCos" type="Main"]
 script = ExtResource("1_myfsw")
+
+[node name="SinCosCurveAnim" type="Main" parent="."]
+script = ExtResource("2_t6ewo")
