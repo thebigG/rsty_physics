@@ -8,7 +8,8 @@
 script = ExtResource("1_myfsw")
 
 [node name="SinCos" type="Main" parent="."]
+visible = false
 script = ExtResource("2_6nuis")
 
-[node name="SinCosCurveAnim" type="Main" parent="."]
+[node name="SinCosCurveCircleAnim" type="Main" parent="."]
 script = ExtResource("2_t6ewo")
