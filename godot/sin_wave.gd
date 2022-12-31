@@ -1,6 +1,5 @@
 extends Main
 
-#TODO: Add curves. Play with radius, x, y, etc
 #This draws a cos and sin wave.
 #At the moment SineWave is just a Line2D node.
 #This will probably stay like this until https://github.com/godot-rust/gdextension/issues/55
@@ -12,7 +11,7 @@ var cos_wave = Line2D.new();
 var y_axis = Line2D.new();
 var x_axis = Line2D.new();
 
-var Origin = Vector2(300,200);
+var Origin = Vector2(100,200);
 
 var obj = Sprite2D.new()
 
