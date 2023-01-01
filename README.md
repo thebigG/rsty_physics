@@ -11,4 +11,4 @@ Exploring Physics with Godot4 and Rust.
 
 ## Non-goals of this project
 
-- Make a product. While ideally a lot of useful code comes out of this, I won't get bogged down with making everything modular/testable etc. Like stated above, I want to have fun doing this. So while I will invest effor into making things re-usable, learning/exploration take higher priority over shipping anything. The main goal here is to learn ;).
+- Make a product. While ideally a lot of useful code comes out of this, I won't get bogged down with making everything modular/testable etc. Like stated above, I want to have fun doing this. So while I will invest effort into making things re-usable, learning/exploration take higher priority over shipping anything. The main goal here is to learn ;).
