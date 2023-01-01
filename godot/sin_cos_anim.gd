@@ -19,7 +19,7 @@ var obj = Sprite2D.new()
 
 var current_sinusoidal_output_val = 0
 var current_cos_output_val = 0
-var sin_step = 0.1  #radians/spped/rate
+var sin_step = 0.05  #radians/spped/rate
 var current_sin_input_val = 0
 var output_scale = 50
 
@@ -29,6 +29,9 @@ var cos_label = Label.new()
 
 var center_x = Origin.x
 var center_y = Origin.y
+
+var speed_spinner = SpinBox.new()
+var speed_label = Label.new()
 
 var radius = 100
 
@@ -64,6 +67,16 @@ func _ready():
 	cos_label.position.y += 25
 	sin_label.add_theme_color_override("font_color", sin_wave.default_color)
 	
+	speed_spinner.position.y += 50
+	speed_spinner.step = .01
+	
+	speed_label.text = "Spped/Angle(Radians):"
+	
+	speed_label.position.y = speed_spinner.position.y
+	
+	speed_spinner.position.x += 175
+	
+	speed_spinner.value_changed.connect(update_sin_step)	
 	add_child(sin_wave)
 	add_child(cos_wave)
 	add_child(y_axis)
@@ -71,6 +84,8 @@ func _ready():
 	add_child(obj)
 	add_child(sin_label)
 	add_child(cos_label)
+	add_child(speed_spinner)
+	add_child(speed_label)
 
 func get_sin_full_circle_2dvectors(degrees_delta: int, scale: int, number_of_phases: int) -> Array:
 	var points = []
@@ -90,10 +105,16 @@ func get_cos_full_circle_2dvectors(degrees_delta: int, scale: int, number_of_pha
 		i += deg_to_rad(degrees_delta)
 	return points
 
-func curve():
+
+#In this case our curve is just a simple "circle". No fancy curves yet.
+func calc_curve(speed_agle: float):
 	pass
 
+func update_sin_step(value: float):
+	sin_step = value
+
 func _physics_process(delta):
+	#In this case our curve is just a simple "circle". No fancy curves yet.
 	current_sinusoidal_output_val = sin(current_sin_input_val) 
 	current_cos_output_val = cos(current_sin_input_val) 
 	
