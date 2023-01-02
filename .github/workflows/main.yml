@@ -47,7 +47,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: /home/lgomez/rsty_physics/target/debug/librsty_physics.so
+          file: rsty_physics/target/debug/librsty_physics.so
           asset_name: linux-x86_nightly_librsty_physics.so
           tag: rsty_physics-nightly-release
           overwrite: true
