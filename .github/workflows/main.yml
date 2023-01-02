@@ -59,11 +59,15 @@ jobs:
     container:
       image: thebigg1/rsty_physics:latest
     steps:
+      #- name: Checkout
+      #  uses: actions/checkout@v2
+      - name: test
+        run: ls /__w/rsty_physics/rsty_physics && ls /home/lgomez
       - name: Upload to release page
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: rsty_physics/target/debug/librsty_physics.so
+          file: /home/lgomez/rsty_physics/target/debug/librsty_physics.so
           asset_name: linux-x86_nightly_librsty_physics.so
           tag: rsty_physics-nightly-release
           overwrite: true
