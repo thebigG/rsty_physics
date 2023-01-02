@@ -70,13 +70,14 @@ func _ready():
 	speed_spinner.position.y += 50
 	speed_spinner.step = .01
 	
-	speed_label.text = "Spped/Angle(Radians):"
+	speed_label.text = "Speed/Angle(Radians):"
 	
 	speed_label.position.y = speed_spinner.position.y
 	
 	speed_spinner.position.x += 175
 	
 	speed_spinner.value_changed.connect(update_sin_step)	
+	speed_spinner.value = sin_step
 	add_child(sin_wave)
 	add_child(cos_wave)
 	add_child(y_axis)
