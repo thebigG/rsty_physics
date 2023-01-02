@@ -43,15 +43,15 @@ jobs:
 #          name: ${{ github.job }}
 #          path: bin/*
 #          retention-days: 14
-      - name: Upload to release page
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: rsty_physics/target/debug/librsty_physics.so
-          asset_name: linux-x86_nightly_librsty_physics.so
-          tag: rsty_physics-nightly-release
-          overwrite: true
-          body: "Bleeding edge release for those who like to live on the edge :)"
+# - name: Upload to release page
+#        uses: svenstaro/upload-release-action@v2
+#        with:
+#          repo_token: ${{ secrets.GITHUB_TOKEN }}
+#          file: rsty_physics/target/debug/librsty_physics.so
+#          asset_name: linux-x86_nightly_librsty_physics.so
+#          tag: rsty_physics-nightly-release
+#          overwrite: true
+#          body: "Bleeding edge release for those who like to live on the edge :)"
 
 
   deploy-nightly:
