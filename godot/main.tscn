@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://t8j66uvuejk1"]
+[gd_scene load_steps=5 format=3 uid="uid://t8j66uvuejk1"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_myfsw"]
 [ext_resource type="Script" path="res://sin_wave.gd" id="2_6nuis"]
 [ext_resource type="Script" path="res://sin_cos_anim.gd" id="2_t6ewo"]
+[ext_resource type="Script" path="res://sin_cos_curve_ellipses_anim.gd" id="4_3hwby"]
 
 [node name="Main" type="Main"]
 script = ExtResource("1_myfsw")
@@ -12,4 +13,8 @@ visible = false
 script = ExtResource("2_6nuis")
 
 [node name="SinCosCurveCircleAnim" type="Main" parent="."]
+visible = false
 script = ExtResource("2_t6ewo")
+
+[node name="SinCosCurveEllipsesAnim" type="Main" parent="."]
+script = ExtResource("4_3hwby")
