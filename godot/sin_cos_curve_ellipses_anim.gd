@@ -13,7 +13,8 @@ var cos_wave = Line2D.new();
 var y_axis = Line2D.new();
 var x_axis = Line2D.new();	
 
-var Origin = Vector2(300,200);
+#Add Control UI for origin and center_x, center_y
+var origin = Vector2(400,200);
 
 var obj = Sprite2D.new()
 
@@ -23,19 +24,27 @@ var sin_step = 0.05  #radians/spped/rate
 var current_sin_input_val = 0
 var output_scale = 50
 
-var sin_output_offset = Origin.y  # Added to sin_output
+var sin_output_offset = origin.y  # Added to sin_output
 var sin_label = Label.new()
 var cos_label = Label.new()
 
-var center_x = Origin.x
-var center_y = Origin.y
+
+var center_x = origin.x
+var center_y = origin.y
 
 var speed_spinner = SpinBox.new()
+var x_radius_spinner = SpinBox.new()
+var y_radius_spinner = SpinBox.new()
+
 var speed_label = Label.new()
+var x_radius_label = Label.new()
+var y_radius_label = Label.new()
 
 #Add these fields as Control nodes
 var x_radius = 100
 var y_radius = 150
+
+var position_delta = Vector2()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -43,26 +52,26 @@ func _ready():
 	var texture = ImageTexture.create_from_image(image)
 	
 	obj.texture = texture
-	obj.position = Origin
+	obj.position = origin
 	obj.scale = Vector2(0.3,0.3)
 	
 	y_axis.default_color = Color(Color.YELLOW)
 	y_axis.default_color.a = 0.25
 	
-	y_axis.points = [Vector2(Origin.x, Origin.y-100), Vector2(Origin.x, Origin.y+300)]
+	y_axis.points = [Vector2(origin.x, origin.y-100), Vector2(origin.x, origin.y+300)]
 	
 	x_axis.default_color = Color(Color.YELLOW)
 	x_axis.default_color.a = 0.25
 	
-	x_axis.points = [Vector2(Origin.x-100, Origin.y), Vector2(Origin.x+300, Origin.y)]
+	x_axis.points = [Vector2(origin.x-100, origin.y), Vector2(origin.x+300, origin.y)]
 	
 	sin_wave.default_color = Color.PURPLE
 	super.new_game()
 	sin_wave.points = get_sin_full_circle_2dvectors(30, 50, 2)
-	sin_wave.position = Origin
+	sin_wave.position = origin
 
 	cos_wave.points = get_cos_full_circle_2dvectors(30, 50, 2)
-	cos_wave.position = Origin
+	cos_wave.position = origin
 	
 	sin_label.text = "Sin"
 	cos_label.text = "Cos"
@@ -78,8 +87,31 @@ func _ready():
 	
 	speed_spinner.position.x += 175
 	
+	x_radius_spinner.value = x_radius
+	x_radius_spinner.max_value = 1000
+	x_radius_spinner.value_changed.connect(update_x_radius)
+	x_radius_spinner.position.y = speed_spinner.position.y + 30
+	x_radius_spinner.position.x += 175
+	
+	print("y_radius:" + str(y_radius))
+	y_radius_spinner.value = y_radius
+	y_radius_spinner.max_value = 1000
+	y_radius_spinner.value_changed.connect(update_y_radius)
+	y_radius_spinner.position.y = x_radius_spinner.position.y + 30
+	y_radius_spinner.position.x += 175
+	
+	x_radius_label.text = "X Radius:"
+	
+	x_radius_label.position.y = x_radius_spinner.position.y
+	
+	y_radius_label.text = "Y Radius:"
+	
+	y_radius_label.position.y = y_radius_spinner.position.y
+	
 	speed_spinner.value_changed.connect(update_sin_step)	
 	speed_spinner.value = sin_step
+	
+	
 	add_child(sin_wave)
 	add_child(cos_wave)
 	add_child(y_axis)
@@ -89,6 +121,11 @@ func _ready():
 	add_child(cos_label)
 	add_child(speed_spinner)
 	add_child(speed_label)
+	add_child(x_radius_spinner)
+	add_child(x_radius_label)
+	add_child(y_radius_spinner)
+	add_child(y_radius_label)
+
 
 func get_sin_full_circle_2dvectors(degrees_delta: int, scale: int, number_of_phases: int) -> Array:
 	var points = []
@@ -115,19 +152,30 @@ func calc_curve(speed_agle: float):
 
 func update_sin_step(value: float):
 	sin_step = value
+	
+func update_x_radius(value: float):
+	x_radius = value
+
+func update_y_radius(value: float):
+	y_radius = value
 
 # TODO:Draw This Ellipses
 func _physics_process(delta):
 	#In this case our curve is just a simple "ellipses". No fancy curves yet.
 	current_sinusoidal_output_val = sin(current_sin_input_val) 
 	current_cos_output_val = cos(current_sin_input_val) 
-	
-	obj.position.x = center_x
+	var old_position = Vector2(obj.position.x, obj.position.y)
+	obj.position.x = center_x 
 	obj.position.y = center_y
 	obj.position.y += (y_radius * current_sinusoidal_output_val)  
 	obj.position.x += (x_radius * current_cos_output_val)  
+	position_delta.x = obj.position.x - old_position.x
+	position_delta.y = obj.position.y - old_position.y
+
 	
+#	print(position_delta)
 	current_sin_input_val += sin_step
+#	print("input:" + str(current_sin_input_val))
 	
 func _process(delta):
 	pass
