@@ -87,15 +87,14 @@ func _ready():
 	
 	speed_spinner.position.x += 175
 	
-	x_radius_spinner.value = x_radius
-	x_radius_spinner.max_value = 1000
+	x_radius_spinner.value = x_radius * 10
+	x_radius_spinner.max_value = x_radius
 	x_radius_spinner.value_changed.connect(update_x_radius)
 	x_radius_spinner.position.y = speed_spinner.position.y + 30
 	x_radius_spinner.position.x += 175
 	
-	print("y_radius:" + str(y_radius))
+	y_radius_spinner.max_value = y_radius * 10
 	y_radius_spinner.value = y_radius
-	y_radius_spinner.max_value = 1000
 	y_radius_spinner.value_changed.connect(update_y_radius)
 	y_radius_spinner.position.y = x_radius_spinner.position.y + 30
 	y_radius_spinner.position.x += 175
