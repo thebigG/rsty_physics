@@ -9,7 +9,6 @@
 script = ExtResource("1_myfsw")
 
 [node name="SinCos" type="Main" parent="."]
-visible = false
 script = ExtResource("2_6nuis")
 
 [node name="SinCosCurveCircleAnim" type="Main" parent="."]
@@ -17,4 +16,5 @@ visible = false
 script = ExtResource("2_t6ewo")
 
 [node name="SinCosCurveEllipsesAnim" type="Main" parent="."]
+visible = false
 script = ExtResource("4_3hwby")
