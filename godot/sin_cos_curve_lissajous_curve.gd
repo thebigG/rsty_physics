@@ -7,21 +7,22 @@ extends Main
 #This will probably stay like this until https://github.com/godot-rust/gdextension/issues/55
 #is resolved. Then all this code will be moved into
 #a rust gdextension; that it is  modular and scalable.
-var sin_wave = SineWave2D.new();
-var cos_wave = Line2D.new();
+var sin_wave = SineWave2D.new()
+var cos_wave = Line2D.new()
 
-var y_axis = Line2D.new();
-var x_axis = Line2D.new();	
+var y_axis = Line2D.new()
+var x_axis = Line2D.new()	
 
 #Add Control UI for origin and center_x, center_y
 var origin = Vector2(400,200);
 
 var obj = Sprite2D.new()
+var obj_shape = Line2D.new()
 
 var current_sinusoidal_output_val = 0
 var current_cos_output_val = 0
-var x_speed = 0.05  #radians/spped/rate
-var y_speed = 0.05  #radians/spped/rate
+var x_speed: float = 0.05  #radians/spped/rate
+var y_speed: float = 0.10  #radians/spped/rate
 var current_sin_input_val = 0
 var current_cos_input_val = 0
 var output_scale = 50
@@ -53,13 +54,14 @@ var position_delta = Vector2()
 
 var spinner_x_offset = 200
 
-# Called when the node enters the scene tree for the first time.
+# Called when the node e6nters the scene tree for the first time.
 func _ready():
 	var image = Image.load_from_file("res://icon.svg")
 	var texture = ImageTexture.create_from_image(image)
 	
 	obj.texture = texture
 	obj.position = origin
+	obj_shape.position = origin
 	obj.scale = Vector2(0.3,0.3)
 	
 	y_axis.default_color = Color(Color.YELLOW)
@@ -100,8 +102,8 @@ func _ready():
 	x_speed_spinner.position.x += spinner_x_offset
 	y_speed_spinner.position.x += spinner_x_offset
 	
-	x_radius_spinner.value = x_radius * 10
-	x_radius_spinner.max_value = x_radius
+	x_radius_spinner.max_value = x_radius * 106
+	x_radius_spinner.value = x_radius 
 	x_radius_spinner.value_changed.connect(update_x_radius)
 	x_radius_spinner.position.y = y_speed_spinner.position.y + 30
 	x_radius_spinner.position.x += spinner_x_offset
@@ -126,12 +128,16 @@ func _ready():
 	y_speed_spinner.value_changed.connect(update_sin_step)	
 	y_speed_spinner.value = y_speed
 	
+	obj_shape.points = get_full_circle_shape_2dvectors_1phase(x_radius, y_radius)
+	obj_shape.default_color = Color(Color.YELLOW)
+	obj_shape.default_color.a = 0.25
 	
 	add_child(sin_wave)
 	add_child(cos_wave)
 	add_child(y_axis)
 	add_child(x_axis)
 	add_child(obj)
+	add_child(obj_shape)
 	add_child(sin_label)
 	add_child(cos_label)
 	add_child(x_speed_spinner)
@@ -148,8 +154,8 @@ func get_sin_full_circle_2dvectors(degrees_delta: int, scale: int, number_of_pha
 	var points = []
 	var i = 0;
 	while i < number_of_phases * (2 * PI):
-		var x = sin(i)
-		points.append(Vector2(i*scale, x*scale))
+		var y = sin(i)
+		points.append(Vector2(i*scale, y*scale))
 		i += deg_to_rad(degrees_delta)
 	return points
 
@@ -157,9 +163,30 @@ func get_cos_full_circle_2dvectors(degrees_delta: int, scale: int, number_of_pha
 	var points = []
 	var i = 0;
 	while i < number_of_phases * (2 * PI):
-		var x = cos(i)
-		points.append(Vector2(i*scale, x*scale))
+		var y = cos(i)
+		points.append(Vector2(i*scale, y*scale))
 		i += deg_to_rad(degrees_delta)
+	return points
+
+func get_full_circle_shape_2dvectors_1phase(x_radius: float, y_radius: float) -> Array:
+#	TODO:I think it's a matter of getting the all the points while the radius has not been covered?? Or going from o to 360n degrees.
+	var points = []
+	var i = 0
+	var current_sin_input_val = 0
+	var current_cos_input_val = 0
+#	Possible implementation...not quite right 
+	while i < 1 * (2 * PI):
+#		Need to come up with all values for sin
+#		Need to come up with all values for cos 
+		var temp_current_sinusoidal_output_val = y_radius * sin(current_sin_input_val) 
+		var temp_current_cos_output_val = x_radius * cos(current_cos_input_val) 
+		points.append(Vector2(temp_current_cos_output_val, temp_current_sinusoidal_output_val))
+		current_sin_input_val += y_speed
+		current_cos_input_val += x_speed
+		if y_speed < x_speed:
+			i += y_speed
+		else:
+			i += x_speed
 	return points
 
 
@@ -169,15 +196,19 @@ func calc_curve(speed_agle: float):
 
 func update_sin_step(value: float):
 	x_speed = value
+	obj_shape.points = get_full_circle_shape_2dvectors_1phase(x_radius, y_radius)
 
 func update_cos_step(value: float):
 	y_speed = value
+	obj_shape.points = get_full_circle_shape_2dvectors_1phase(x_radius, y_radius)
 	
 func update_x_radius(value: float):
 	x_radius = value
+	obj_shape.points = get_full_circle_shape_2dvectors_1phase(x_radius, y_radius)
 
 func update_y_radius(value: float):
 	y_radius = value
+	obj_shape.points = get_full_circle_shape_2dvectors_1phase(x_radius, y_radius)
 
 # TODO:Draw This Ellipses
 func _physics_process(delta):
@@ -191,10 +222,13 @@ func _physics_process(delta):
 	obj.position.x += (x_radius * current_cos_output_val)  
 	position_delta.x = obj.position.x - old_position.x
 	position_delta.y = obj.position.y - old_position.y
+	
+#	print("pos:" + str(obj.position -  origin))
+	
+	current_sin_input_val += y_speed
+	current_cos_input_val += x_speed
+	
+#	print("Current input:" + str(current_cos_input_val/2*PI))
 
-	
-	current_sin_input_val += x_speed
-	current_cos_input_val += y_speed
-	
 func _process(delta):
 	pass
