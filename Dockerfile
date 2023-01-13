@@ -27,4 +27,6 @@ RUN cd /home/lgomez/ && wget https://downloads.tuxfamily.org/godotengine/4.0/bet
 #RUN rustup target add wasm32-unknown-unknown
 #RUN cargo install trunk
 env GODOT4_BIN=/home/lgomez/Godot_v4.0-beta6_linux.x86_64
+RUN cd /home/lgomez/ && wget https://downloads.tuxfamily.org/godotengine/4.0/beta6/Godot_v4.0-beta6_export_templates.tpz
+RUN mv /home/lgomez/Godot_v4.0-beta6_export_templates.tpz /home/lgomez/Godot_v4.0-beta6_export_templates.zip
 RUN cd /home/lgomez/rsty_physics && cargo clean && cargo build && cargo test
