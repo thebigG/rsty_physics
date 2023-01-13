@@ -29,4 +29,7 @@ RUN cd /home/lgomez/ && wget https://downloads.tuxfamily.org/godotengine/4.0/bet
 env GODOT4_BIN=/home/lgomez/Godot_v4.0-beta6_linux.x86_64
 RUN cd /home/lgomez/ && wget https://downloads.tuxfamily.org/godotengine/4.0/beta6/Godot_v4.0-beta6_export_templates.tpz
 RUN mv /home/lgomez/Godot_v4.0-beta6_export_templates.tpz /home/lgomez/Godot_v4.0-beta6_export_templates.zip
+RUN cd /home/lgomez/ &&  unzip /home/lgomez/Godot_v4.0-beta6_export_templates.zip
+#RUN mv /home/lgomez/templates  /home/lgomez/.local/share/godot/export_templates/4.0.beta6
+
 RUN cd /home/lgomez/rsty_physics && cargo clean && cargo build && cargo test
