@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://be8cog442f2rt"]
+[gd_scene load_steps=7 format=3 uid="uid://b8rmqcwe6uh6p"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_myfsw"]
 [ext_resource type="Script" path="res://sin_wave.gd" id="2_6nuis"]
 [ext_resource type="Script" path="res://sin_cos_anim.gd" id="2_t6ewo"]
 [ext_resource type="Script" path="res://sin_cos_curve_ellipses_anim.gd" id="4_3hwby"]
 [ext_resource type="Script" path="res://sin_cos_curve_lissajous_curve.gd" id="5_kjar3"]
+[ext_resource type="Script" path="res://arc_tan.gd" id="6_6gg1n"]
 
 [node name="Main" type="Main"]
 script = ExtResource("1_myfsw")
@@ -23,3 +24,7 @@ script = ExtResource("4_3hwby")
 [node name="SinCosCurveLissajousCurve" type="Main" parent="."]
 visible = false
 script = ExtResource("5_kjar3")
+
+[node name="ArcTan" type="Main" parent="."]
+visible = false
+script = ExtResource("6_6gg1n")
