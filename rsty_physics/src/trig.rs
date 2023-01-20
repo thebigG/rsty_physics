@@ -89,13 +89,14 @@ impl SineWave2D {
     fn draw_wave(&mut self) {
         println!("draw_wave1...");
 
-        let mut points = Array::new();
-        points;
+        //Update with new imports and other updates. Look at https://github.com/thebigG/gdextension/commit/6dbf0d7f06719538ac1ecb62125331bb50cd8659
+        // let mut points = Array::new();
+        // points;
 
-        points.append(Vector2::new(0.0, 100.0));
-        let v = Vector2Array::from(&points);
+        // points.append(Vector2::new(0.0, 100.0));
+        // let v = Vector2Array::from(&points);
 
-        self.base.set_points(v)
+        // self.base.set_points(v)
     }
 }
 
