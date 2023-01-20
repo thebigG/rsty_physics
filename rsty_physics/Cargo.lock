@@ -67,7 +67,7 @@ checksum = "9b919933a397b79c37e33b77bb2aa3dc8eb6e165ad809e58ff75bc7db2e34574"
 [[package]]
 name = "godot"
 version = "0.1.0"
-source = "git+https://github.com/godot-rust/gdextension?branch=master#5a8a0007dc0464d0f2b8f4a0e74d3cfdd7c0bdbf"
+source = "git+https://github.com/thebigG/gdextension.git?branch=2dLine#b26588e8626cafa4104158a1b499d3d6e104122f"
 dependencies = [
  "godot-core",
  "godot-macros",
@@ -76,7 +76,7 @@ dependencies = [
 [[package]]
 name = "godot-codegen"
 version = "0.1.0"
-source = "git+https://github.com/godot-rust/gdextension?branch=master#5a8a0007dc0464d0f2b8f4a0e74d3cfdd7c0bdbf"
+source = "git+https://github.com/thebigG/gdextension.git?branch=2dLine#b26588e8626cafa4104158a1b499d3d6e104122f"
 dependencies = [
  "nanoserde",
  "proc-macro2",
@@ -88,7 +88,7 @@ dependencies = [
 [[package]]
 name = "godot-core"
 version = "0.1.0"
-source = "git+https://github.com/godot-rust/gdextension?branch=master#5a8a0007dc0464d0f2b8f4a0e74d3cfdd7c0bdbf"
+source = "git+https://github.com/thebigG/gdextension.git?branch=2dLine#b26588e8626cafa4104158a1b499d3d6e104122f"
 dependencies = [
  "glam",
  "godot-ffi",
@@ -98,7 +98,7 @@ dependencies = [
 [[package]]
 name = "godot-ffi"
 version = "0.1.0"
-source = "git+https://github.com/godot-rust/gdextension?branch=master#5a8a0007dc0464d0f2b8f4a0e74d3cfdd7c0bdbf"
+source = "git+https://github.com/thebigG/gdextension.git?branch=2dLine#b26588e8626cafa4104158a1b499d3d6e104122f"
 dependencies = [
  "bindgen",
  "godot-codegen",
@@ -108,7 +108,7 @@ dependencies = [
 [[package]]
 name = "godot-macros"
 version = "0.1.0"
-source = "git+https://github.com/godot-rust/gdextension?branch=master#5a8a0007dc0464d0f2b8f4a0e74d3cfdd7c0bdbf"
+source = "git+https://github.com/thebigG/gdextension.git?branch=2dLine#b26588e8626cafa4104158a1b499d3d6e104122f"
 dependencies = [
  "proc-macro2",
  "quote",

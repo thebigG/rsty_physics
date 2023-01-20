@@ -49,7 +49,6 @@ func _ready():
 #	obj.rotate(PI)
 	image = Image.load_from_file("res://assets/arrow-png-images-3.png")
 	texture = ImageTexture.create_from_image(image)
-
 	
 	obj.scale = Vector2(0.05,0.05)
 	
@@ -125,7 +124,6 @@ func update_sin_step(value: float):
 	sin_step = value
 
 func _physics_process(delta):
-	#In this case our curve is just a simple "circle". No fancy curves yet.
 	var prev_rotation = current_sin_input_val;
 	current_sinusoidal_output_val = sin(current_sin_input_val) 
 	current_cos_output_val = cos(current_sin_input_val) 
@@ -139,11 +137,7 @@ func _physics_process(delta):
 	var tan_x = obj.position.x - center_x
 	var tan_y = obj.position.y - center_y
 	current_angle  = atan2(tan_y, tan_x)
-#	obj.translate(Vector2(center_x, center_y))
-	print(current_angle)
-#	obj.rotate(current_angle)
-	obj.rotate(abs(prev_rotation - current_angle))
-	print(obj.rotation)
+	obj.rotation = current_angle
 	
 func _process(delta):
 	pass
