@@ -1,4 +1,4 @@
-extends Main
+extends Node3D
 
 var views: OptionButton = OptionButton.new()
 
@@ -7,6 +7,8 @@ func _ready():
 	views.position.x += self.get_viewport().size.y/2
 	for child in self.get_children():
 		views.add_item(child.name)
+		if child.name != "SinCos":
+			child.set("visible", false)
 	
 	views.item_selected.connect(select_view)
 	add_child(views)

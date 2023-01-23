@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b8rmqcwe6uh6p"]
+[gd_scene load_steps=9 format=3 uid="uid://b8rmqcwe6uh6p"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_myfsw"]
 [ext_resource type="Script" path="res://sin_wave.gd" id="2_6nuis"]
@@ -7,8 +7,9 @@
 [ext_resource type="Script" path="res://sin_cos_curve_lissajous_curve.gd" id="5_kjar3"]
 [ext_resource type="Script" path="res://arc_tan.gd" id="6_6gg1n"]
 [ext_resource type="Script" path="res://hypotenuse.gd" id="7_lxxvh"]
+[ext_resource type="PackedScene" uid="uid://6whdm40788wq" path="res://assets/bimotor.glb" id="8_rcrqp"]
 
-[node name="Main" type="Main"]
+[node name="Main" type="Node3D"]
 script = ExtResource("1_myfsw")
 
 [node name="SinCos" type="Main" parent="."]
@@ -33,3 +34,15 @@ script = ExtResource("6_6gg1n")
 [node name="Hypotenuse" type="Main" parent="."]
 visible = false
 script = ExtResource("7_lxxvh")
+
+[node name="Plane" type="RigidBody3D" parent="."]
+transform = Transform3D(0.626236, 0.779633, 0, -0.779633, 0.626236, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="bimotor" parent="Plane" instance=ExtResource("8_rcrqp")]
+transform = Transform3D(7.05562, -7.08648, 0, 7.08648, 7.05562, 0, 0, 0, 10, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Plane"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -137.502, 110.448, 495.456)
+
+[node name="Light" type="DirectionalLight3D" parent="Plane"]
+transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, -110.043, 88.3913, 252.687)
