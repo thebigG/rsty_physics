@@ -26,8 +26,8 @@ var current_cos_input_val = 0
 var output_scale = 50
 
 var sin_output_offset = origin.y  # Added to sin_output
-var sin_label = Label.new()
-var cos_label = Label.new()
+var sin_label = CheckButton.new()
+var cos_label = CheckButton.new()
 
 var center_x = origin.x
 var center_y = origin.y
@@ -42,16 +42,19 @@ var red_y2_spinner = SpinBox.new()
 var red_x2_label = Label.new()
 var red_y2_label = Label.new()
 
-var blue_y2: float = 100  #radians/spped/rate
-var blue_x2: float = 100  #radians/spped/rate
+var blue_y2 = 50  #radians/spped/rate
+var blue_x2 = 50  #radians/spped/rate
 #Add these fields as Control nodes
 var red_x2 = 100
-var red_y2 = 150
+var red_y2 = 35
 
 var position_delta = Vector2()
 var spinner_x_offset = 100
 
-var vector_step = 10
+var vector_step = 5
+
+var dot_product_label = Label.new()
+var dot_product_value = dot_product(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
 
 # Called when the node e6nters the scene tree for the first time.
 func _ready():
@@ -70,11 +73,14 @@ func _ready():
 	x_axis.default_color.a = 0.25
 	
 	x_axis.points = [Vector2(origin.x-100, origin.y), Vector2(origin.x+300, origin.y)]
+
 	
 	sin_wave.default_color = Color.PURPLE
 	super.new_game()
 	sin_wave.points = get_sin_full_circle_2dvectors(30, 50, 2)
 	sin_wave.position = origin
+	sin_wave.visible = false
+	cos_wave.visible = false
 
 	cos_wave.points = get_cos_full_circle_2dvectors(30, 50, 2)
 	cos_wave.position = origin
@@ -101,15 +107,17 @@ func _ready():
 	blue_y2_spinner.position.x += spinner_x_offset
 	blue_x2_spinner.position.x += spinner_x_offset
 	
-	red_x2_spinner.max_value = red_x2 * 106
+	red_x2_spinner.max_value = red_x2 * 10
+	red_x2_spinner.min_value = red_x2_spinner.max_value * -1
 	red_x2_spinner.value = red_x2 
-	red_x2_spinner.value_changed.connect(update_y1)
+	red_x2_spinner.value_changed.connect(update_red_x2)
 	red_x2_spinner.position.y = blue_x2_spinner.position.y + 30
 	red_x2_spinner.position.x += spinner_x_offset
 	
 	red_y2_spinner.max_value = red_y2 * 10
+	red_y2_spinner.min_value = red_y2_spinner.max_value * -1
 	red_y2_spinner.value = red_y2
-	red_y2_spinner.value_changed.connect(update_y2)
+	red_y2_spinner.value_changed.connect(update_red_y2)
 	red_y2_spinner.position.y = red_x2_spinner.position.y + 30
 	red_y2_spinner.position.x += spinner_x_offset
 	
@@ -123,10 +131,14 @@ func _ready():
 	
 	red_y2_label.position.y = red_y2_spinner.position.y
 	
-	blue_y2_spinner.value_changed.connect(update_red_y2_step)	
+	blue_y2_spinner.value_changed.connect(update_blue_y2)	
+	blue_y2_spinner.max_value = 100 * blue_y2
+	blue_y2_spinner.min_value =  blue_y2_spinner.max_value * -1
 	blue_y2_spinner.value = blue_y2
 	
-	blue_x2_spinner.value_changed.connect(update_red_x2_step)	
+	blue_x2_spinner.value_changed.connect(update_blue_x2)	
+	blue_x2_spinner.max_value = 100 * blue_x2
+	blue_x2_spinner.min_value =  blue_x2_spinner.max_value * -1
 	blue_x2_spinner.value = blue_x2
 	
 	red_vector_shape.points = get_vector_from_origin_2dvectors(red_x2, red_y2)
@@ -136,6 +148,10 @@ func _ready():
 	blue_vector_shape.points = get_vector_from_origin_2dvectors(blue_x2, blue_y2)
 	blue_vector_shape.default_color = Color.BLUE
 	blue_vector_shape.default_color.a = 0.25
+	
+	dot_product_label.text = "Dot Product:" + str(dot_product_value)
+	dot_product_label.add_theme_color_override("font_color", Color.WHITE)
+	dot_product_label.position.y = red_y2_spinner.position.y  + 30
 	
 	add_child(sin_wave)
 	add_child(cos_wave)
@@ -153,6 +169,7 @@ func _ready():
 	add_child(red_x2_label)
 	add_child(red_y2_spinner)
 	add_child(red_y2_label)
+	add_child(dot_product_label)
 
 
 func get_sin_full_circle_2dvectors(degrees_delta: int, scale: int, number_of_phases: int) -> Array:
@@ -192,21 +209,25 @@ func get_vector_from_origin_2dvectors(x: float, y: float) -> Array:
 func calc_curve(speed_agle: float):
 	pass
 
-func update_red_x2_step(value: float):
-	red_x2 = value
-	red_vector_shape.points = get_vector_from_origin_2dvectors(blue_x2, blue_y2)
-
-func update_red_y2_step(value: float):
-	red_y2 = value
-	red_vector_shape.points = get_vector_from_origin_2dvectors(red_x2, red_y2)
-	
-func update_y1(value: float):
+func update_red_x2(value: float):
 	red_x2 = value
 	red_vector_shape.points = get_vector_from_origin_2dvectors(red_x2, red_y2)
+	dot_product_value = dot_product(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
 
-func update_y2(value: float):
+func update_red_y2(value: float):
 	red_y2 = value
 	red_vector_shape.points = get_vector_from_origin_2dvectors(red_x2, red_y2)
+	dot_product_value = dot_product(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
+
+func update_blue_x2(value: float):
+	blue_x2 = value
+	blue_vector_shape.points = get_vector_from_origin_2dvectors(blue_x2, blue_y2)
+	dot_product_value = dot_product(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
+
+func update_blue_y2(value: float):
+	blue_y2 = value
+	blue_vector_shape.points = get_vector_from_origin_2dvectors(blue_x2, blue_y2)
+	dot_product_value = dot_product(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
 
 # TODO:Draw This Ellipses
 func _physics_process(delta):
@@ -219,7 +240,13 @@ func _physics_process(delta):
 	current_sin_input_val += blue_x2
 	current_cos_input_val += blue_y2
 	
+	dot_product_label.text = "Dot Product:" + str(dot_product_value)
+	
 #	print("Current input:" + str(current_cos_input_val/2*PI))
+
+func dot_product(a: Vector2, b: Vector2):
+	return ((a.x * b.x) + (a.y * b.y))
+
 
 func _process(delta):
 	pass
