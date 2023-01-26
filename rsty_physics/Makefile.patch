@@ -1,0 +1,10 @@
+diff --git a/rsty_physics/Makefile b/rsty_physics/Makefile
+index 8eb6749..225f1b7 100644
+--- a/rsty_physics/Makefile
++++ b/rsty_physics/Makefile
+@@ -1,4 +1,4 @@
+ ONESHELL:
+ 
+ build:
+-	GODOT4_BIN=~/Applications/Godot_v4.0-beta6_linux.x86_64 cargo build
++	GODOT4_BIN=~/Applications/Godot_v4.0-beta15_linux.x86_64 cargo build
