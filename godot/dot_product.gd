@@ -56,6 +56,9 @@ var vector_step = 5
 var dot_product_label = Label.new()
 var dot_product_value = dot_product(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
 
+var dot_product_normalized_label = Label.new()
+var dot_product_normalized_value = dot_product_normalized(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
+
 # Called when the node e6nters the scene tree for the first time.
 func _ready():
 	var image = Image.load_from_file("res://icon.svg")
@@ -153,6 +156,10 @@ func _ready():
 	dot_product_label.add_theme_color_override("font_color", Color.WHITE)
 	dot_product_label.position.y = red_y2_spinner.position.y  + 30
 	
+	dot_product_normalized_label.text = "Dot Product Normalized:" + str(dot_product_normalized_value)
+	dot_product_normalized_label.add_theme_color_override("font_color", Color.WHITE)
+	dot_product_normalized_label.position.y = dot_product_label.position.y  + 30
+	
 	add_child(sin_wave)
 	add_child(cos_wave)
 	add_child(y_axis)
@@ -170,6 +177,7 @@ func _ready():
 	add_child(red_y2_spinner)
 	add_child(red_y2_label)
 	add_child(dot_product_label)
+	add_child(dot_product_normalized_label)
 
 
 func get_sin_full_circle_2dvectors(degrees_delta: int, scale: int, number_of_phases: int) -> Array:
@@ -213,21 +221,27 @@ func update_red_x2(value: float):
 	red_x2 = value
 	red_vector_shape.points = get_vector_from_origin_2dvectors(red_x2, red_y2)
 	dot_product_value = dot_product(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
+	dot_product_normalized_value = dot_product_normalized(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
 
 func update_red_y2(value: float):
 	red_y2 = value
 	red_vector_shape.points = get_vector_from_origin_2dvectors(red_x2, red_y2)
 	dot_product_value = dot_product(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
+	dot_product_normalized_value = dot_product_normalized(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
 
 func update_blue_x2(value: float):
 	blue_x2 = value
 	blue_vector_shape.points = get_vector_from_origin_2dvectors(blue_x2, blue_y2)
 	dot_product_value = dot_product(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
+	dot_product_normalized_value = dot_product_normalized(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
+
 
 func update_blue_y2(value: float):
 	blue_y2 = value
 	blue_vector_shape.points = get_vector_from_origin_2dvectors(blue_x2, blue_y2)
 	dot_product_value = dot_product(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
+	dot_product_normalized_value = dot_product_normalized(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
+
 
 # TODO:Draw This Ellipses
 func _physics_process(delta):
@@ -241,12 +255,21 @@ func _physics_process(delta):
 	current_cos_input_val += blue_y2
 	
 	dot_product_label.text = "Dot Product:" + str(dot_product_value)
-	
-#	print("Current input:" + str(current_cos_input_val/2*PI))
+	dot_product_normalized_label.text = "Dot Product Normalized:" + str(dot_product_normalized_value)	
+
 
 func dot_product(a: Vector2, b: Vector2):
 	return ((a.x * b.x) + (a.y * b.y))
 
+
+func magnitude(v: Vector2):
+	return sqrt(pow(v.x, 2) + pow(v.y, 2))
+
+func normalize(v: Vector2):
+	return Vector2(v.x/magnitude(v), v.y/magnitude(v) )
+
+func dot_product_normalized(a: Vector2, b: Vector2):
+	return snapped(dot_product(normalize(a),normalize(b)), 0.001 )  
 
 func _process(delta):
 	pass

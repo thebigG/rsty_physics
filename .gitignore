@@ -14,3 +14,7 @@
 *debug*
 *TAG*
 *json
+
+*.so
+*x86*
+
