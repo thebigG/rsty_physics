@@ -59,8 +59,14 @@ var dot_product_value = dot_product(Vector2(red_x2, red_y2), Vector2(blue_x2, bl
 var dot_product_normalized_label = Label.new()
 var dot_product_normalized_value = dot_product_normalized(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
 
+var angle_between_label = Label.new()
+var angle_between_value = angle_between(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
+
+var code_link = RichTextLabel.new()
+
 # Called when the node e6nters the scene tree for the first time.
 func _ready():
+#	OS.shell_open("google.com")
 	var image = Image.load_from_file("res://icon.svg")
 	var texture = ImageTexture.create_from_image(image)
 
@@ -160,6 +166,24 @@ func _ready():
 	dot_product_normalized_label.add_theme_color_override("font_color", Color.WHITE)
 	dot_product_normalized_label.position.y = dot_product_label.position.y  + 30
 	
+	
+	angle_between_label.text = "Angle Between Vectors:" + str(angle_between_value)
+	angle_between_label.add_theme_color_override("font_color", Color.WHITE)
+	angle_between_label.position.y = dot_product_normalized_label.position.y  + 30
+	
+	code_link.bbcode_enabled = true
+#	code_link.set_text("<b>Bold</b> <i>6Italic</i> <u>Underlined</u>")
+
+	code_link.text = "https://github.com/thebigG/rsty_physics/blob/main/godot/dot_product.gd"	
+	code_link.text = "[url=https://github.com/thebigG/rsty_physics/blob/main/godot/dot_product.gd][/https://github.com/thebigG/rsty_physics/blob/main/godot/dot_product.gd]"
+	code_link.meta_underlined = true
+	code_link.size = Vector2(600,100)
+	code_link.position = Vector2(origin)
+	code_link.position.y += 400
+	code_link.size_flags_horizontal = 0 
+	code_link.visible = true 
+	code_link.meta_clicked.connect(open_browser_link)
+	
 	add_child(sin_wave)
 	add_child(cos_wave)
 	add_child(y_axis)
@@ -178,7 +202,13 @@ func _ready():
 	add_child(red_y2_label)
 	add_child(dot_product_label)
 	add_child(dot_product_normalized_label)
+	add_child(code_link)
+#	add_child(angle_between_label)
 
+
+func open_browser_link(url: String):
+	print(url)
+	OS.shell_open(url)
 
 func get_sin_full_circle_2dvectors(degrees_delta: int, scale: int, number_of_phases: int) -> Array:
 	var points = []
@@ -222,25 +252,28 @@ func update_red_x2(value: float):
 	red_vector_shape.points = get_vector_from_origin_2dvectors(red_x2, red_y2)
 	dot_product_value = dot_product(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
 	dot_product_normalized_value = dot_product_normalized(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
+	angle_between_value = angle_between(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
 
 func update_red_y2(value: float):
 	red_y2 = value
 	red_vector_shape.points = get_vector_from_origin_2dvectors(red_x2, red_y2)
 	dot_product_value = dot_product(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
 	dot_product_normalized_value = dot_product_normalized(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
+	angle_between_value = angle_between(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
 
 func update_blue_x2(value: float):
 	blue_x2 = value
 	blue_vector_shape.points = get_vector_from_origin_2dvectors(blue_x2, blue_y2)
 	dot_product_value = dot_product(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
 	dot_product_normalized_value = dot_product_normalized(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
-
+	angle_between_value = angle_between(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
 
 func update_blue_y2(value: float):
 	blue_y2 = value
 	blue_vector_shape.points = get_vector_from_origin_2dvectors(blue_x2, blue_y2)
 	dot_product_value = dot_product(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
 	dot_product_normalized_value = dot_product_normalized(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
+	angle_between_value = angle_between(Vector2(red_x2, red_y2), Vector2(blue_x2, blue_y2))
 
 
 # TODO:Draw This Ellipses
@@ -248,19 +281,20 @@ func _physics_process(delta):
 	#In this case our curve is just a simple "ellipses". No fancy curves yet.
 	current_sinusoidal_output_val = sin(current_sin_input_val) 
 	current_cos_output_val = cos(current_cos_input_val) 
-	
-#	print("pos:" + str(obj.position -  origin))
-	
+
 	current_sin_input_val += blue_x2
 	current_cos_input_val += blue_y2
-	
+
 	dot_product_label.text = "Dot Product:" + str(dot_product_value)
 	dot_product_normalized_label.text = "Dot Product Normalized:" + str(dot_product_normalized_value)	
+	dot_product_normalized_label.text = "Dot Product Normalized:" + str(dot_product_normalized_value)
+	angle_between_label.text = "Angle Between Vectors:" + str(snapped(rad_to_deg(angle_between_value), 0.001))
+#	print(angle_between_value)6
+	pass
 
 
 func dot_product(a: Vector2, b: Vector2):
 	return ((a.x * b.x) + (a.y * b.y))
-
 
 func magnitude(v: Vector2):
 	return sqrt(pow(v.x, 2) + pow(v.y, 2))
@@ -270,6 +304,15 @@ func normalize(v: Vector2):
 
 func dot_product_normalized(a: Vector2, b: Vector2):
 	return snapped(dot_product(normalize(a),normalize(b)), 0.001 )  
+
+func angle_between(a: Vector2, b: Vector2):
+	#	dp = mag(a) * mag(b) *  cos(a)
+	#	acos(dp/mag(a)/mag(b)) = a
+	var dp = dot_product(a,b)
+	var mag_a = magnitude(a)
+	var mag_b = magnitude(b)
+	var a_result = acos(dp/mag_a/mag_b)
+	return a_result
 
 func _process(delta):
 	pass
