@@ -203,7 +203,7 @@ func _ready():
 	add_child(dot_product_label)
 	add_child(dot_product_normalized_label)
 	add_child(code_link)
-#	add_child(angle_between_label)
+	add_child(angle_between_label)
 
 
 func open_browser_link(url: String):
