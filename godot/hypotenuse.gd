@@ -44,6 +44,8 @@ var spinner_x_offset = 200
 var spinner_y_offset = 50
 var shape_color = Color.YELLOW
 
+var code_link = RichTextLabel.new()
+
 
 # Called when the node e6nters the scene tree for the first time.
 func _ready():
@@ -84,6 +86,16 @@ func _ready():
 	obj_shape.default_color = shape_color
 	obj_shape.default_color.a = 0.25
 	
+	code_link.bbcode_enabled = true
+
+	code_link.text = "[url=https://github.com/thebigG/rsty_physics/blob/main/godot/hypotenuse.gd][/https://github.com/thebigG/rsty_physics/blob/main/godot/hypotenuse.gd]"
+	code_link.meta_underlined = true
+	code_link.size = Vector2(600,100)
+	code_link.position = Vector2(origin)
+	code_link.position.y += 400
+	code_link.size_flags_horizontal = 0 
+	code_link.visible = true 
+	code_link.meta_clicked.connect(open_browser_link)
 	
 	add_child(sin_wave)
 	add_child(cos_wave)
@@ -93,7 +105,11 @@ func _ready():
 	add_child(obj_shape)
 	add_child(sin_label)
 	add_child(cos_label)
+	add_child(code_link)
 
+func open_browser_link(url: String):
+	print(url)
+	OS.shell_open(url)
 
 func get_sin_full_circle_2dvectors(degrees_delta: int, scale: int, number_of_phases: int) -> Array:
 	var points = []

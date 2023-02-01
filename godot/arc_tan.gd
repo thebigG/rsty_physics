@@ -37,6 +37,8 @@ var current_angle = 0
 
 var radius = 100
 
+var code_link = RichTextLabel.new()
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var image = Image.load_from_file("res://assets/arrow-png-images-3.png")
@@ -86,16 +88,33 @@ func _ready():
 	
 	speed_spinner.value_changed.connect(update_sin_step)	
 	speed_spinner.value = sin_step
+	
+	code_link.bbcode_enabled = true
+
+	code_link.text = "[url=https://github.com/thebigG/rsty_physics/blob/main/godot/arc_tan.gd][/https://github.com/thebigG/rsty_physics/blob/main/godot/arc_tan.gd]"
+	code_link.meta_underlined = true
+	code_link.size = Vector2(600,100)
+	code_link.position = Vector2(Origin)
+	code_link.position.y += 400
+	code_link.size_flags_horizontal = 0 
+	code_link.visible = true 
+	code_link.meta_clicked.connect(open_browser_link)
+	
 	add_child(sin_wave)
 	add_child(cos_wave)
 	add_child(y_axis)
 	add_child(x_axis)
 	add_child(obj)
-
 	add_child(sin_label)
 	add_child(cos_label)
 	add_child(speed_spinner)
 	add_child(speed_label)
+	add_child(code_link)
+
+
+func open_browser_link(url: String):
+	print(url)
+	OS.shell_open(url)
 
 func get_sin_full_circle_2dvectors(degrees_delta: int, scale: int, number_of_phases: int) -> Array:
 	var points = []

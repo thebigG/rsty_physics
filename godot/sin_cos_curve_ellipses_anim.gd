@@ -46,6 +46,8 @@ var y_radius = 150
 
 var position_delta = Vector2()
 
+var code_link = RichTextLabel.new()
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var image = Image.load_from_file("res://icon.svg")
@@ -110,6 +112,17 @@ func _ready():
 	speed_spinner.value_changed.connect(update_sin_step)	
 	speed_spinner.value = sin_step
 	
+	code_link.bbcode_enabled = true
+
+	code_link.text = "[url=https://github.com/thebigG/rsty_physics/blob/main/godot/sin_cos_curve_ellipses_anim.gd][/https://github.com/thebigG/rsty_physics/blob/main/godot/sin_cos_curve_ellipses_anim.gd]"
+	code_link.meta_underlined = true
+	code_link.size = Vector2(600,100)
+	code_link.position = Vector2(origin)
+	code_link.position.y += 400
+	code_link.size_flags_horizontal = 0 
+	code_link.visible = true 
+	code_link.meta_clicked.connect(open_browser_link)
+	
 	
 	add_child(sin_wave)
 	add_child(cos_wave)
@@ -124,7 +137,11 @@ func _ready():
 	add_child(x_radius_label)
 	add_child(y_radius_spinner)
 	add_child(y_radius_label)
+	add_child(code_link)
 
+func open_browser_link(url: String):
+	print(url)
+	OS.shell_open(url)
 
 func get_sin_full_circle_2dvectors(degrees_delta: int, scale: int, number_of_phases: int) -> Array:
 	var points = []

@@ -24,6 +24,7 @@ var sin_output_offset = Origin.y  # Added to sin_output
 var sin_label = Label.new()
 var cos_label = Label.new()
 
+var code_link = RichTextLabel.new()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var image = Image.load_from_file("res://icon.svg")
@@ -56,6 +57,17 @@ func _ready():
 	cos_label.position.y += 25
 	sin_label.add_theme_color_override("font_color", sin_wave.default_color)
 	
+	code_link.bbcode_enabled = true
+
+	code_link.text = "[url=https://github.com/thebigG/rsty_physics/blob/main/godot/sin_wave.gd][/https://github.com/thebigG/rsty_physics/blob/main/godot/sin_wave.gd]"
+	code_link.meta_underlined = true
+	code_link.size = Vector2(600,100)
+	code_link.position = Vector2(Origin)
+	code_link.position.y += 400
+	code_link.size_flags_horizontal = 0 
+	code_link.visible = true 
+	code_link.meta_clicked.connect(open_browser_link)
+	
 	add_child(sin_wave)
 	add_child(cos_wave)
 	add_child(y_axis)
@@ -63,6 +75,11 @@ func _ready():
 	add_child(obj)
 	add_child(sin_label)
 	add_child(cos_label)
+	add_child(code_link)
+
+func open_browser_link(url: String):
+	print(url)
+	OS.shell_open(url)
 
 func get_sin_full_circle_2dvectors(degrees_delta: int, scale: int, number_of_phases: int) -> Array:
 	var points = []

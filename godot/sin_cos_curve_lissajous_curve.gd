@@ -54,6 +54,8 @@ var position_delta = Vector2()
 
 var spinner_x_offset = 200
 
+var code_link = RichTextLabel.new()
+
 # Called when the node e6nters the scene tree for the first time.
 func _ready():
 	var image = Image.load_from_file("res://icon.svg")
@@ -132,6 +134,17 @@ func _ready():
 	obj_shape.default_color = Color(Color.YELLOW)
 	obj_shape.default_color.a = 0.25
 	
+	code_link.bbcode_enabled = true
+
+	code_link.text = "[url=https://github.com/thebigG/rsty_physics/blob/main/godot/sin_cos_curve_lissajous_curve.gd][/https://github.com/thebigG/rsty_physics/blob/main/godot/sin_cos_curve_lissajous_curve.gd]"
+	code_link.meta_underlined = true
+	code_link.size = Vector2(600,100)
+	code_link.position = Vector2(origin)
+	code_link.position.y += 400
+	code_link.size_flags_horizontal = 0 
+	code_link.visible = true 
+	code_link.meta_clicked.connect(open_browser_link)
+	
 	add_child(sin_wave)
 	add_child(cos_wave)
 	add_child(y_axis)
@@ -148,7 +161,11 @@ func _ready():
 	add_child(x_radius_label)
 	add_child(y_radius_spinner)
 	add_child(y_radius_label)
+	add_child(code_link)
 
+func open_browser_link(url: String):
+	print(url)
+	OS.shell_open(url)
 
 func get_sin_full_circle_2dvectors(degrees_delta: int, scale: int, number_of_phases: int) -> Array:
 	var points = []
