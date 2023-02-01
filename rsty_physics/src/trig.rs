@@ -6,7 +6,7 @@ use std::borrow::Borrow;
 use godot::builtin::Vector2;
 use godot::engine::node::InternalMode;
 use godot::engine::packed_scene::GenEditState;
-use godot::engine::utilities::sin;
+use godot::engine::utilities::{deg_to_rad, sin};
 use godot::engine::{Line2D, Marker2D, PathFollow2D, RigidBody2D, Timer};
 use godot::prelude::*;
 // use rand::Rng as _;
@@ -14,6 +14,7 @@ use godot::private::You_forgot_the_attribute__godot_api;
 use std::f64::consts::PI;
 
 use godot::builtin::VariantType::PackedVector2Array;
+use godot::builtin::{Array, FromVariant, GodotString, ToVariant};
 use godot::sys::types::OpaquePackedVector2Array;
 use godot::sys::VariantType::Object;
 // use godot::sys::VariantType::Vector2;
@@ -86,9 +87,12 @@ impl SineWave2D {
     }
 
     #[func]
-    fn draw_wave(&mut self) {
+    fn draw_wave(&mut self) -> Array {
+        // let array = Array::from(&[1, 2]);
+        let array = Array::from(&[Vector2::new(0.0, 100.0)]);
         println!("draw_wave1...");
 
+        array
         //Update with new imports and other updates. Look at https://github.com/thebigG/gdextension/commit/6dbf0d7f06719538ac1ecb62125331bb50cd8659
         // let mut points = Array::new();
         // points;
@@ -128,13 +132,13 @@ impl GodotExt for SineWave2D {
 // Deriving GodotClass makes the class available to Godot
 #[derive(GodotClass)]
 #[class(base=Node2D)]
-pub struct Main {
+pub struct Main2D {
     score: i64,
     #[base]
     base: Base<Node2D>,
 }
 #[godot_api]
-impl Main {
+impl Main2D {
     #[func]
     fn game_over(&mut self) {
         println!("Game over!");
@@ -199,12 +203,33 @@ impl Main {
         // println!("{}", verticies);
         // let circle = Polygon2D;
     }
+
+    // TODO:Finish impl
+    // #[func]
+    // fn get_sin_full_circle_2dvectors(&mut self, degrees_delta: f64, scale: f32, number_of_phases: f32) -> Array{
+    //     let mut points = Array::from(&[Vector2::new(0.0, 100.0)]);;
+    //     let mut i: f64 = 0.0;
+    //     // TODO:cleanup and remove all these casts
+    //     let tmp: f32 = 2.0;
+    //     let tmp_pi: f32 = PI as f32;
+    //     println!("get_sin_full_circle_2dvectors1:{}", (number_of_phases * (tmp * tmp_pi)));
+    //     while i < (number_of_phases * (tmp * tmp_pi)) as f64 {
+    //         let x: f32 = sin(i) as f32;
+    //         println!("get_sin_full_circle_2dvectors2");
+    //         // TODO:Not sure why the sin/cos functions are using f64 and the vectors are using f32
+    //         println!("{}",i);
+    // 	    points.push(Vector2::new((i as f32 * scale as f32) as f32, (x as f32 * scale as f32) as f32).to_variant());
+    //         i += deg_to_rad(degrees_delta);
+    //     }
+    //     println!("get_sin_full_circle_2dvectors3");
+    //     points
+    // }
 }
 
 #[godot_api]
-impl GodotExt for Main {
+impl GodotExt for Main2D {
     fn init(base: Base<Node2D>) -> Self {
-        Main {
+        Main2D {
             // mob_scene: PackedScene::new(),
             score: 0,
             base,
