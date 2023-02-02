@@ -205,25 +205,40 @@ impl Main2D {
     }
 
     // TODO:Finish impl
-    // #[func]
-    // fn get_sin_full_circle_2dvectors(&mut self, degrees_delta: f64, scale: f32, number_of_phases: f32) -> Array{
-    //     let mut points = Array::from(&[Vector2::new(0.0, 100.0)]);;
-    //     let mut i: f64 = 0.0;
-    //     // TODO:cleanup and remove all these casts
-    //     let tmp: f32 = 2.0;
-    //     let tmp_pi: f32 = PI as f32;
-    //     println!("get_sin_full_circle_2dvectors1:{}", (number_of_phases * (tmp * tmp_pi)));
-    //     while i < (number_of_phases * (tmp * tmp_pi)) as f64 {
-    //         let x: f32 = sin(i) as f32;
-    //         println!("get_sin_full_circle_2dvectors2");
-    //         // TODO:Not sure why the sin/cos functions are using f64 and the vectors are using f32
-    //         println!("{}",i);
-    // 	    points.push(Vector2::new((i as f32 * scale as f32) as f32, (x as f32 * scale as f32) as f32).to_variant());
-    //         i += deg_to_rad(degrees_delta);
-    //     }
-    //     println!("get_sin_full_circle_2dvectors3");
-    //     points
-    // }
+    #[func]
+    fn get_sin_full_circle_2dvectors(
+        &mut self,
+        degrees_delta: i32,
+        scale: i32,
+        number_of_phases: i32,
+    ) -> Array {
+        let mut points = Array::from(&[Vector2::new(0.0, 100.0)]);
+        let mut i: f64 = 0.0;
+        // TODO:cleanup and remove all these casts
+        let tmp: f64 = 2.0;
+        let tmp_pi = PI;
+        println!("get_sin_full_circle_2dvectors1:{}", (number_of_phases));
+        while i < (number_of_phases as f64 * (tmp * tmp_pi)) {
+            let x: f32 = sin(i) as f32;
+            println!("get_sin_full_circle_2dvectors2:{}", number_of_phases);
+            // TODO:Not sure why the sin/cos functions are using f64 and the vectors are using f32
+            println!("{}", i);
+            println!("degrees_delta:{}", degrees_delta);
+            println!("scale:{}", scale);
+            println!("number_of_phases:{}", number_of_phases);
+
+            points.push(
+                Vector2::new(
+                    (i as f32 * scale as f32) as f32,
+                    (x as f32 * scale as f32) as f32,
+                )
+                .to_variant(),
+            );
+            i += deg_to_rad(degrees_delta as f64);
+        }
+        println!("get_sin_full_circle_2dvectors3");
+        points
+    }
 }
 
 #[godot_api]

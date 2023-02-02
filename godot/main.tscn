@@ -14,26 +14,26 @@
 script = ExtResource("1_myfsw")
 metadata/_edit_horizontal_guides_ = []
 
-[node name="SinCos" type="Main" parent="."]
+[node name="SinCos" type="Main2D" parent="."]
 script = ExtResource("2_6nuis")
 
-[node name="SinCosCurveCircleAnim" type="Main" parent="."]
+[node name="SinCosCurveCircleAnim" type="Main2D" parent="."]
 visible = false
 script = ExtResource("2_t6ewo")
 
-[node name="SinCosCurveEllipsesAnim" type="Main" parent="."]
+[node name="SinCosCurveEllipsesAnim" type="Main2D" parent="."]
 visible = false
 script = ExtResource("4_3hwby")
 
-[node name="SinCosCurveLissajousCurve" type="Main" parent="."]
+[node name="SinCosCurveLissajousCurve" type="Main2D" parent="."]
 visible = false
 script = ExtResource("5_kjar3")
 
-[node name="ArcTan" type="Main" parent="."]
+[node name="ArcTan" type="Main2D" parent="."]
 visible = false
 script = ExtResource("6_6gg1n")
 
-[node name="Hypotenuse" type="Main" parent="."]
+[node name="Hypotenuse" type="Main2D" parent="."]
 visible = false
 script = ExtResource("7_lxxvh")
 
@@ -49,5 +49,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -137.502, 110.448, 495.456)
 [node name="Light" type="DirectionalLight3D" parent="Plane"]
 transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, -110.043, 88.3913, 252.687)
 
-[node name="DotProduct" type="Main" parent="."]
+[node name="DotProduct" type="Main2D" parent="."]
 script = ExtResource("9_cpuy8")

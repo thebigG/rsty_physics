@@ -1,4 +1,4 @@
-extends Main
+extends Main2D
 
 #This draws a cos and sin wave.
 #At the moment SineWave is just a Line2D node.
@@ -45,8 +45,10 @@ func _ready():
 	x_axis.points = [Vector2(Origin.x-100, Origin.y), Vector2(Origin.x+300, Origin.y)]
 	
 	sin_wave.default_color = Color.PURPLE
+	
+	print(super.get_sin_full_circle_2dvectors(30, 50, 2))
 	super.new_game()
-	sin_wave.points = get_sin_full_circle_2dvectors(30, 50, 2)
+	sin_wave.points = super.get_sin_full_circle_2dvectors(30, 50, 2)
 	sin_wave.position = Origin
 
 	cos_wave.points = get_cos_full_circle_2dvectors(30, 50, 2)
@@ -81,14 +83,14 @@ func open_browser_link(url: String):
 	print(url)
 	OS.shell_open(url)
 
-func get_sin_full_circle_2dvectors(degrees_delta: int, scale: int, number_of_phases: int) -> Array:
-	var points = []
-	var i = 0;
-	while i < number_of_phases * (2 * PI):
-		var x = sin(i)
-		points.append(Vector2(i*scale, x*scale))
-		i += deg_to_rad(degrees_delta)
-	return points
+#func get_sin_full_circle_2dvectors(degrees_delta: int, scale: int, number_of_phases: int) -> Array:
+#	var points = []
+#	var i = 0;
+#	while i < number_of_phases * (2 * PI):
+#		var x = sin(i)
+#		points.append(Vector2(i*scale, x*scale))
+#		i += deg_to_rad(degrees_delta)
+#	return points
 
 func get_cos_full_circle_2dvectors(degrees_delta: int, scale: int, number_of_phases: int ) -> Array:
 	var points = []

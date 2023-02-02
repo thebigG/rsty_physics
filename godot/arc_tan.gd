@@ -1,4 +1,4 @@
-extends Main
+extends Main2D
 
 #TODO: Add curves. Play with radius, x, y, etc
 #Animates Godot in a circle using cos/x, sin/y and radius around a center_x,center_y 
@@ -65,7 +65,7 @@ func _ready():
 	x_axis.points = [Vector2(Origin.x-100, Origin.y), Vector2(Origin.x+300, Origin.y)]
 	
 	sin_wave.default_color = Color.PURPLE
-	super.new_game()
+	new_game()
 	sin_wave.points = get_sin_full_circle_2dvectors(30, 50, 2)
 	sin_wave.position = Origin
 
@@ -115,15 +115,6 @@ func _ready():
 func open_browser_link(url: String):
 	print(url)
 	OS.shell_open(url)
-
-func get_sin_full_circle_2dvectors(degrees_delta: int, scale: int, number_of_phases: int) -> Array:
-	var points = []
-	var i = 0;
-	while i < number_of_phases * (2 * PI):
-		var x = sin(i)
-		points.append(Vector2(i*scale, x*scale))
-		i += deg_to_rad(degrees_delta)
-	return points
 
 func get_cos_full_circle_2dvectors(degrees_delta: int, scale: int, number_of_phases: int ) -> Array:
 	var points = []
