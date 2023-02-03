@@ -111,15 +111,6 @@ func open_browser_link(url: String):
 	print(url)
 	OS.shell_open(url)
 
-func get_cos_full_circle_2dvectors(degrees_delta: int, scale: int, number_of_phases: int ) -> Array:
-	var points = []
-	var i = 0;
-	while i < number_of_phases * (2 * PI):
-		var y = cos(i)
-		points.append(Vector2(i*scale, y*scale))
-		i += deg_to_rad(degrees_delta)
-	return points
-
 func get_full_circle_shape_2dvectors_1phase(x_radius: float, y_radius: float) -> Array:
 #	TODO:I think it's a matter of getting the all the points while the radius has not been covered?? Or going from o to 360n degrees.
 	var points = []

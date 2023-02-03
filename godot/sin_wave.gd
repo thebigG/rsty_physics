@@ -48,7 +48,7 @@ func _ready():
 	
 	print(super.get_sin_full_circle_2dvectors(30, 50, 2))
 	super.new_game()
-	sin_wave.points = super.get_sin_full_circle_2dvectors(30, 50, 2)
+	sin_wave.points = get_sin_full_circle_2dvectors(30, 50, 2)
 	sin_wave.position = Origin
 
 	cos_wave.points = get_cos_full_circle_2dvectors(30, 50, 2)
@@ -69,6 +69,10 @@ func _ready():
 	code_link.size_flags_horizontal = 0 
 	code_link.visible = true 
 	code_link.meta_clicked.connect(open_browser_link)
+	
+	print(Origin.posmod(101))
+		
+	print(Origin.posmod(101.0))
 	
 	add_child(sin_wave)
 	add_child(cos_wave)
@@ -91,15 +95,6 @@ func open_browser_link(url: String):
 #		points.append(Vector2(i*scale, x*scale))
 #		i += deg_to_rad(degrees_delta)
 #	return points
-
-func get_cos_full_circle_2dvectors(degrees_delta: int, scale: int, number_of_phases: int ) -> Array:
-	var points = []
-	var i = 0;
-	while i < number_of_phases * (2 * PI):
-		var x = cos(i)
-		points.append(Vector2(i*scale, x*scale))
-		i += deg_to_rad(degrees_delta)
-	return points
 
 func _physics_process(delta):
 	current_sinusoidal_output_val = sin(current_sin_input_val) * sin_output_scale
