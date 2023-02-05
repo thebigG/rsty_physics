@@ -64,6 +64,8 @@ var angle_between_value = angle_between(Vector2(red_x2, red_y2), Vector2(blue_x2
 
 var code_link = RichTextLabel.new()
 
+var particle: Particle2D = Particle2D.new()
+
 # Called when the node e6nters the scene tree for the first time.
 func _ready():
 #	OS.shell_open("google.com")

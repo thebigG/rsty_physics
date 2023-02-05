@@ -20,6 +20,141 @@ use godot::sys::types::OpaquePackedVector2Array;
 use godot::sys::VariantType::Object;
 // use godot::sys::VariantType::Vector2;
 
+struct rsty_Vector {}
+
+///A particle made up of velocity and position
+#[derive(GodotClass)]
+#[class(base=Node2D)]
+pub struct Particle2D {
+    position: Vector2,
+    velocity: Vector2,
+    #[base]
+    base: Base<Node2D>,
+}
+#[godot_api]
+impl Particle2D {
+    #[func]
+    fn game_over(&mut self) {
+        println!("Game over!");
+    }
+
+    #[func]
+    pub fn new_game(&mut self) {
+        // Obj::call();
+
+        println!("New game");
+        // let start_position = self.base.get_node_as::<Marker2D>("StartPosition");
+        // let mut player = self.base.get_node_as::<player::Player>("Player");
+        // let mut start_timer = self.base.get_node_as::<Timer>("StartTimer");
+        //
+        // self.score = 0;
+        //
+        // player.bind_mut().start(start_position.get_position());
+        // start_timer.start(0.0);
+        //
+        // let mut hud = self.base.get_node_as::<Hud>("Hud");
+        // let hud = hud.bind_mut();
+        // hud.update_score(self.score);
+        // hud.show_message("Get Ready".into());
+        //
+        // self.music().play(0.0);
+    }
+
+    #[func]
+    fn test_sin(&mut self, angle: f64, answer: f64) {
+        //Not sure if this is the "best" way to "round" numbers between 1.0 and 0.0, but it works.
+        // do_some_work();
+
+        assert_eq!(
+            format!("{:.1}", (sin(angle.to_radians()) * 10.0)),
+            format!("{:.1}", answer * 10.0)
+        );
+    }
+
+    #[func]
+    fn full_circle_sin(&mut self) {
+        // Postive realm
+
+        self.test_sin(30.0, 0.50);
+        self.test_sin(60.0, 0.87);
+        self.test_sin(90.0, 1.0);
+        self.test_sin(120.0, 0.87);
+        self.test_sin(150.0, 0.5);
+        self.test_sin(180.0, f64::EPSILON);
+
+        // Negative realm on the y-axis
+        self.test_sin(210.0, -0.50);
+        self.test_sin(240.0, -0.87);
+        self.test_sin(270.0, -1.0);
+        self.test_sin(300.0, -0.87);
+        self.test_sin(330.0, -0.5);
+        self.test_sin(360.0, -f64::EPSILON);
+    }
+
+    #[func]
+    fn draw_wave(&mut self) -> Array {
+        // let array = Array::from(&[1, 2]);
+        let array = Array::from(&[Vector2::new(0.0, 100.0)]);
+        println!("draw_wave1...");
+
+        array
+        //Update with new imports and other updates. Look at https://github.com/thebigG/gdextension/commit/6dbf0d7f06719538ac1ecb62125331bb50cd8659
+        // let mut points = Array::new();
+        // points;
+
+        // points.append(Vector2::new(0.0, 100.0));
+        // let v = Vector2Array::from(&points);
+
+        // self.base.set_points(v)
+    }
+
+    ///At the moment gd-rust does not have support for godot properties.
+    /// So for now setters will have to do.
+    // #[func]
+    // fn init(&mut self, new_position: Vector2, new_speed: f32, direction: f32){
+    //     self.position = new_position;
+    //     let v = new_position.as_inner();
+    // }
+
+    ///At the moment gd-rust does not have support for godot properties.
+    /// So for now setters will have to do.
+    #[func]
+    fn set_position(&mut self, new_position: Vector2) {
+        self.position = new_position;
+    }
+
+    #[func]
+    fn set_velocity(&mut self, new_velocity: Vector2) {
+        self.velocity = new_velocity;
+    }
+}
+
+#[godot_api]
+impl GodotExt for Particle2D {
+    fn init(base: Base<Node2D>) -> Self {
+        Particle2D {
+            // mob_scene: PackedScene::new(),
+            position: Default::default(),
+            base,
+            // music: None,
+            // death_sound: None,
+            velocity: Default::default(),
+        }
+    }
+
+    fn ready(&mut self) {
+        // Note: this is downcast during load() -- completely type-safe thanks to type inference!
+        // If the resource does not exist or has an incompatible type, this panics.
+        // There is also try_load() if you want to check whether loading succeeded.
+        // self.mob_scene = load("res://Mob.tscn");
+        // self.music = Some(self.base.get_node_as("Music"));
+        // self.death_sound = Some(self.base.get_node_as("DeathSound"));
+        self.full_circle_sin();
+        // self.draw_wave();
+        // self.draw_circle();
+    }
+}
+
 #[derive(GodotClass)]
 #[class(base=Line2D)]
 pub struct SineWave2D {
