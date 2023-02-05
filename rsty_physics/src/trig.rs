@@ -17,10 +17,76 @@ use godot::builtin::VariantType::PackedVector2Array;
 use godot::builtin::{Array, FromVariant, GodotString, ToVariant};
 use godot::prelude::Variant;
 use godot::sys::types::OpaquePackedVector2Array;
-use godot::sys::VariantType::Object;
+
 // use godot::sys::VariantType::Vector2;
 
-struct rsty_Vector {}
+// struct rsty_Vector2 {
+//     x: f32,
+//     y: f32
+// }
+//
+// impl rsty_Vector2{
+//     fn new() -> rsty_Vector2{
+//         rsty_Vector2{
+//             x: 0.0,
+//             y: 0.0,
+//         }
+//     }
+// }
+
+///A particle made up of velocity and position
+#[derive(GodotClass)]
+#[class(base=Node)]
+pub struct rsty_Vector2 {
+    x: f32,
+    y: f32,
+    #[base]
+    base: Base<Node>,
+}
+#[godot_api]
+impl rsty_Vector2 {
+    ///Stuck with set functions until properties are supported
+    #[func]
+    fn set_x(&mut self, value: f32) {
+        self.x = value;
+    }
+
+    ///Stuck with set functions until properties are supported
+    #[func]
+    fn set_y(&mut self, value: f32) {
+        self.y = value;
+    }
+
+    //At the moment gd-rust does not have support for godot properties.
+    // So for now setters will have to do.
+    // #[func]
+    // fn init(&mut self, new_position: Vector2, new_speed: f32, direction: f32){
+    //     self.position = new_position;
+    //     let v = new_position.as_inner();
+    // }
+}
+#[godot_api]
+impl GodotExt for rsty_Vector2 {
+    fn init(base: Base<Node>) -> Self {
+        rsty_Vector2 {
+            x: 0.0,
+            y: 0.0,
+            base,
+        }
+    }
+
+    fn ready(&mut self) {
+        // Note: this is downcast during load() -- completely type-safe thanks to type inference!
+        // If the resource does not exist or has an incompatible type, this panics.
+        // There is also try_load() if you want to check whether loading succeeded.
+        // self.mob_scene = load("res://Mob.tscn");
+        // self.music = Some(self.base.get_node_as("Music"));
+        // self.death_sound = Some(self.base.get_node_as("DeathSound"));
+        self.full_circle_sin();
+        // self.draw_wave();
+        // self.draw_circle();
+    }
+}
 
 ///A particle made up of velocity and position
 #[derive(GodotClass)]
