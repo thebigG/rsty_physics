@@ -6,7 +6,7 @@ use std::borrow::Borrow;
 use godot::builtin::Vector2;
 use godot::engine::node::InternalMode;
 use godot::engine::packed_scene::GenEditState;
-use godot::engine::utilities::{cos, deg_to_rad, sin};
+use godot::engine::utilities::{atan2, cos, deg_to_rad, pow, sin, sqrt};
 use godot::engine::{Line2D, Marker2D, PathFollow2D, RigidBody2D, Timer};
 use godot::prelude::*;
 // use rand::Rng as _;
@@ -37,14 +37,14 @@ use godot::sys::types::OpaquePackedVector2Array;
 ///A particle made up of velocity and position
 #[derive(GodotClass)]
 #[class(base=Node)]
-pub struct rsty_Vector2 {
+pub struct RstyVector2 {
     x: f32,
     y: f32,
     #[base]
     base: Base<Node>,
 }
 #[godot_api]
-impl rsty_Vector2 {
+impl RstyVector2 {
     ///Stuck with set functions until properties are supported
     #[func]
     fn set_x(&mut self, value: f32) {
@@ -57,6 +57,62 @@ impl rsty_Vector2 {
         self.y = value;
     }
 
+    #[func]
+    fn get_y(&mut self) -> f32{
+        return self.y;
+    }
+
+    #[func]
+    fn get_x(&mut self) -> f32{
+        return self.x;
+    }
+
+    #[func]
+    fn set_length(&mut self, length: f32) {
+    let angle = self.get_angle();
+    self.x = (cos(angle) as f32 * length) as f32;
+    self.y = (sin(angle) as f32 * length) as f32;
+  }
+    #[func]
+    fn get_length(&mut self) -> f64 {
+    return sqrt(pow(self.x as f64, 2.0) + pow(self.y as f64, 2.0));
+  }
+
+    #[func]
+    fn set_angle(&mut self, angle: f32) {
+    let length = self.get_length();
+    self.x = (cos(angle as f64) * length) as f32;
+    self.y = (sin(angle as f64) * length) as f32;
+  }
+
+    #[func]
+    fn get_angle(&mut self) -> f64 {
+     atan2(self.y as f64, self.x as f64)
+  }
+    #[func]
+    fn add(&mut self, mut v2: RstyVector2) -> Vector2 {
+      Vector2{x: self.get_x() + v2.get_x(), y: self.get_y() + v2.get_y()}
+  }
+    #[func]
+    fn substract(&mut self, mut v2: RstyVector2)-> Vector2 {
+     Vector2{x: self.get_x() - v2.get_x(), y: self.get_y() - v2.get_y()}
+  }
+
+    #[func]
+    fn multiply(&mut self, scalar: f32)-> Vector2 {
+    return  Vector2{x: self.get_x() * scalar, y: self.get_y() * scalar};
+  }
+
+    fn divide(&mut self, scalar: f32)-> Vector2 {
+    return Vector2{x: self.get_x() / scalar, y: self.get_y() / scalar};
+  }
+    #[func]
+    fn get_godot_vector2(&mut self) -> Vector2{
+        return Vector2{
+            x: self.x,
+            y: self.y,
+        }
+    }
     //At the moment gd-rust does not have support for godot properties.
     // So for now setters will have to do.
     // #[func]
@@ -66,9 +122,9 @@ impl rsty_Vector2 {
     // }
 }
 #[godot_api]
-impl GodotExt for rsty_Vector2 {
+impl GodotExt for RstyVector2 {
     fn init(base: Base<Node>) -> Self {
-        rsty_Vector2 {
+        RstyVector2 {
             x: 0.0,
             y: 0.0,
             base,
@@ -82,7 +138,6 @@ impl GodotExt for rsty_Vector2 {
         // self.mob_scene = load("res://Mob.tscn");
         // self.music = Some(self.base.get_node_as("Music"));
         // self.death_sound = Some(self.base.get_node_as("DeathSound"));
-        self.full_circle_sin();
         // self.draw_wave();
         // self.draw_circle();
     }
