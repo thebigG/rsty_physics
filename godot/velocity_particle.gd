@@ -28,7 +28,7 @@ var particle_velocity = Vector2()
 
 var current_sinusoidal_output_val = 0
 var current_cos_output_val = 0
-var speed = 0.5  #radians/spped/rate
+var velocity = 0.5  #radians/spped/rate
 var current_sin_input_val = 0
 var output_scale = 50
 
@@ -39,8 +39,8 @@ var cos_label = Label.new()
 var center_x = Origin.x
 var center_y = Origin.y
 
-var speed_spinner = SpinBox.new()
-var speed_label = Label.new()
+var velocity_spinner = SpinBox.new()
+var velocity_label = Label.new()
 
 var radius = 100
 
@@ -53,26 +53,23 @@ var x_velocity: float = 2
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Origin.length()
-	v.set_x(1.0)
-	v.set_y(1.0)
-	print("vector:" + str(v.get_godot_vector2()))
+#	v.set_x(1.0)
+#	v.set_y(1.0)
 	var image = Image.load_from_file("res://icon.svg")
 	var texture = ImageTexture.create_from_image(image)
-
+	
+	particle_position = Vector2(Origin)
 	particle.texture = texture
 	particle.position = particle_position
 	particle.scale = Vector2(0.3,0.3)
 
 #	Have to do this since godot has no "set_length" for vectors. https://github.com/godotengine/godot/pull/37704
-	particle_velocity = get_vector2_with_length(particle_velocity, speed)
+	particle_velocity = get_vector2_with_length(particle_velocity, velocity)
 	particle_velocity = Vector2(2,2)
-	print("velocity:" + str(particle_velocity))
+#	print("velocity:" + str(particle_velocity))
 
 	y_axis.default_color = Color(Color.YELLOW)
 	y_axis.default_color.a = 0.25
-	
-	
 	
 	y_axis.points = [Vector2(Origin.x, Origin.y-y_axis_length), Vector2(Origin.x, Origin.y+y_axis_length)]
 
@@ -94,17 +91,17 @@ func _ready():
 	cos_label.position.y += 25
 	sin_label.add_theme_color_override("font_color", sin_wave.default_color)
 
-	speed_spinner.position.y += 50
-	speed_spinner.step = .01
+	velocity_spinner.position.y += 50
+	velocity_spinner.step = .01
 
-	speed_label.text = "Speed/Angle(Radians):"
+	velocity_label.text = "velocity:"
 
-	speed_label.position.y = speed_spinner.position.y
+	velocity_label.position.y = velocity_spinner.position.y
 
-	speed_spinner.position.x += 175
+	velocity_spinner.position.x += 75
 
-	speed_spinner.value_changed.connect(update_sin_step)
-	speed_spinner.value = speed
+	velocity_spinner.value_changed.connect(update_velocity)
+	velocity_spinner.value = velocity
 
 	code_link.bbcode_enabled = true
 
@@ -124,8 +121,8 @@ func _ready():
 	add_child(particle)
 	add_child(sin_label)
 	add_child(cos_label)
-	add_child(speed_spinner)
-	add_child(speed_label)
+	add_child(velocity_spinner)
+	add_child(velocity_label)
 	add_child(code_link)
 
 func get_vector2_with_length(v: Vector2, length) -> Vector2 :
@@ -140,19 +137,15 @@ func get_vector2_with_angle(v: Vector2, angle: float) -> Vector2:
 
 
 func update_particle():
-#	This is kind of convoluted
 
-	if(particle_position.x > 200 or particle_position.x < -200):
-#		particle_velocity =  particle_velocity.rotated(PI)
-#		print("switch:" + str( particle.position))
-		x_velocity  = -1 * x_velocity
+	if(particle_position.x > Origin.x + x_axis_length or particle_position.x < Origin.x - x_axis_length):
+		velocity  = -1 * velocity
 		
 	particle_velocity.y = y_velocity
-	particle_velocity.x = x_velocity
+	particle_velocity.x = velocity
 	
 	particle_position += particle_velocity
 	
-#	print(particle.position)
 	particle.position = particle_position
 	
 
@@ -164,8 +157,8 @@ func open_browser_link(url: String):
 func calc_curve(speed_agle: float):
 	pass
 
-func update_sin_step(value: float):
-	speed = value
+func update_velocity(value: float):
+	velocity = value
 
 func _physics_process(delta):
 	#In this case our curve is just a simple "circle". No fancy curves yet.

@@ -1,10 +1,10 @@
 [gd_scene load_steps=11 format=3 uid="uid://b8rmqcwe6uh6p"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_myfsw"]
-[ext_resource type="Script" path="res://sin_wave.gd" id="2_6nuis"]
-[ext_resource type="Script" path="res://sin_cos_anim.gd" id="2_t6ewo"]
+[ext_resource type="PackedScene" uid="uid://bg3840tmsna3e" path="res://sin_cos.tscn" id="2_egy8c"]
+[ext_resource type="PackedScene" uid="uid://blbn1tv8xnh3d" path="res://sin_cos_curve_circle_anim.tscn" id="3_7l0ck"]
 [ext_resource type="Script" path="res://sin_cos_curve_ellipses_anim.gd" id="4_3hwby"]
-[ext_resource type="Script" path="res://velocity_particle.gd" id="4_luw0l"]
+[ext_resource type="PackedScene" uid="uid://byf2x3bypa23o" path="res://velocity_particle.tscn" id="4_de20r"]
 [ext_resource type="Script" path="res://sin_cos_curve_lissajous_curve.gd" id="5_kjar3"]
 [ext_resource type="Script" path="res://arc_tan.gd" id="6_6gg1n"]
 [ext_resource type="Script" path="res://hypotenuse.gd" id="7_lxxvh"]
@@ -15,16 +15,11 @@
 script = ExtResource("1_myfsw")
 metadata/_edit_horizontal_guides_ = []
 
-[node name="SinCos" type="Main2D" parent="."]
-script = ExtResource("2_6nuis")
+[node name="SinCos" parent="." instance=ExtResource("2_egy8c")]
 
-[node name="SinCosCurveCircleAnim" type="Main2D" parent="."]
-visible = false
-script = ExtResource("2_t6ewo")
+[node name="SinCosCurveCircleAnim" parent="." instance=ExtResource("3_7l0ck")]
 
-[node name="VelocityParticle" type="Main2D" parent="."]
-visible = false
-script = ExtResource("4_luw0l")
+[node name="VelocityParticle" parent="." instance=ExtResource("4_de20r")]
 
 [node name="SinCosCurveEllipsesAnim" type="Main2D" parent="."]
 visible = false
@@ -44,6 +39,7 @@ script = ExtResource("7_lxxvh")
 
 [node name="Plane" type="RigidBody3D" parent="."]
 transform = Transform3D(0.626236, 0.779633, 0, -0.779633, 0.626236, 0, 0, 0, 1, 0, 0, 0)
+visible = false
 
 [node name="bimotor" parent="Plane" instance=ExtResource("8_rcrqp")]
 transform = Transform3D(7.05562, -7.08648, 0, 7.08648, 7.05562, 0, 0, 0, 10, 0, 0, 0)
@@ -55,4 +51,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -137.502, 110.448, 495.456)
 transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, -110.043, 88.3913, 252.687)
 
 [node name="DotProduct" type="Main2D" parent="."]
+visible = false
 script = ExtResource("9_cpuy8")
