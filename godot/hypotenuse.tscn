@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2dg5bxent7dl"]
+
+[ext_resource type="Script" path="res://hypotenuse.gd" id="1_xox53"]
+
+[node name="Hypotenuse" type="Main2D"]
+visible = false
+script = ExtResource("1_xox53")

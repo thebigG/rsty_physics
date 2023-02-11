@@ -27,6 +27,7 @@ var cos_label = Label.new()
 var code_link = RichTextLabel.new()
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	print("ready*************")
 	var image = Image.load_from_file("res://icon.svg")
 	var texture = ImageTexture.create_from_image(image)
 	
@@ -46,7 +47,7 @@ func _ready():
 	
 	sin_wave.default_color = Color.PURPLE
 	
-	print(super.get_sin_full_circle_2dvectors(30, 50, 2))
+#	print(super.get_sin_full_circle_2dvectors(30, 50, 2))
 	super.new_game()
 	sin_wave.points = get_sin_full_circle_2dvectors(30, 50, 2)
 	sin_wave.position = Origin

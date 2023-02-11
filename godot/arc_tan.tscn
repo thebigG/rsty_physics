@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://uac0iau48nkb"]
+
+[ext_resource type="Script" path="res://arc_tan.gd" id="1_biixc"]
+
+[node name="ArcTan" type="Main2D"]
+visible = false
+script = ExtResource("1_biixc")

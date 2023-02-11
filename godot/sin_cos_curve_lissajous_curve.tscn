@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://b80homftajaev"]
+
+[ext_resource type="Script" path="res://sin_cos_curve_lissajous_curve.gd" id="1_56ui6"]
+
+[node name="SinCosCurveLissajousCurve" type="Main2D"]
+visible = false
+script = ExtResource("1_56ui6")
