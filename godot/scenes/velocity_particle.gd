@@ -54,7 +54,7 @@ var x_velocity: float = 2
 func _ready():
 #	v.set_x(1.0)
 #	v.set_y(1.0)
-	var image = Image.load_from_file("res://icon.svg")
+	var image = Image.load_from_file("res://assets/icon.svg")
 	var texture = ImageTexture.create_from_image(image)
 	
 	particle_position = Vector2(Origin)

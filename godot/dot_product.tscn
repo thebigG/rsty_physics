@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dp7nkapue6c3f"]
-
-[ext_resource type="Script" path="res://dot_product.gd" id="1_wdtms"]
-
-[node name="DotProduct" type="Main2D"]
-visible = false
-script = ExtResource("1_wdtms")

@@ -69,7 +69,7 @@ var particle: Particle2D = Particle2D.new()
 # Called when the node e6nters the scene tree for the first time.
 func _ready():
 #	OS.shell_open("google.com")
-	var image = Image.load_from_file("res://icon.svg")
+	var image = Image.load_from_file("res://assets/icon.svg")
 	var texture = ImageTexture.create_from_image(image)
 
 	red_vector_shape.position = origin

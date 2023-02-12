@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://jin2esb1euv7"]
+
+[ext_resource type="Script" path="res://scenes/sin_wave.gd" id="1_lp7yf"]
+
+[node name="SinCos" type="Main2D"]
+script = ExtResource("1_lp7yf")

@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://byf2x3bypa23o"]
-
-[ext_resource type="Script" path="res://velocity_particle.gd" id="1_oljpi"]
-
-[node name="VelocityParticle" type="Main2D"]
-visible = false
-script = ExtResource("1_oljpi")

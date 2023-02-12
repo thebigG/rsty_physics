@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://blbn1tv8xnh3d"]
-
-[ext_resource type="Script" path="res://sin_cos_anim.gd" id="1_d3mlv"]
-
-[node name="SinCosCurveCircleAnim" type="Main2D"]
-visible = false
-script = ExtResource("1_d3mlv")
