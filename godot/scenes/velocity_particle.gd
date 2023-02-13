@@ -99,6 +99,9 @@ func _ready():
 	velocity_label.position.y = x_velocity_spinner.position.y
 
 	x_velocity_spinner.position.x += 75
+	
+	x_velocity_spinner.min_value = -1000.0
+	x_velocity_spinner.max_value = 1000.0
 
 	x_velocity_spinner.value_changed.connect(update_x_velocity)
 	x_velocity_spinner.value = x_velocity
@@ -158,8 +161,6 @@ func calc_curve(speed_agle: float):
 	pass
 
 func update_x_velocity(value: float):
-	x_velocity_spinner.min_value = abs(value) * -1
-	x_velocity_spinner.max_value = abs(value) 
 	x_velocity = value
 
 func _physics_process(delta):
