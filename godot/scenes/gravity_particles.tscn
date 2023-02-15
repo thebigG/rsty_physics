@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cwr8b5nblf04p"]
+
+[ext_resource type="Script" path="res://scenes/gravity_particles.gd" id="1_4tnc4"]
+
+[node name="GravityParticles" type="Main2D"]
+visible = false
+script = ExtResource("1_4tnc4")
