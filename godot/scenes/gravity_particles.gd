@@ -19,7 +19,7 @@ var x_axis = Line2D.new();
 
 var Origin = Vector2(500,200);
 
-var particle = Sprite2D.new()
+var particle1 = Sprite2D.new()
 
 #var particle_position = Origin
 var particle_position = Vector2()
@@ -58,15 +58,17 @@ var apply_x_acceleration_button  = Button.new()
 
 var apply_x_accel: bool  = false
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var image = Image.load_from_file("res://assets/icon.svg")
 	var texture = ImageTexture.create_from_image(image)
 	
 	particle_position = Vector2(Origin)
-	particle.texture = texture
-	particle.position = particle_position
-	particle.scale = Vector2(0.3,0.3)
+	particle1.texture = texture
+	particle1.position = particle_position
+	particle1.scale = Vector2(0.3,0.3)
+	particle1.modulate = Color(1, 0, 0, 0.5)
 
 #	Have to do this since godot has no "set_length" for vectors. https://github.com/godotengine/godot/pull/37704
 	particle_velocity = get_vector2_with_length(particle_velocity, x_velocity)
@@ -145,12 +147,13 @@ func _ready():
 	code_link.size_flags_horizontal = 0
 	code_link.visible = true
 	code_link.meta_clicked.connect(open_browser_link)
+	
 
 	add_child(sin_wave)
 	add_child(cos_wave)
 	add_child(y_axis)
 	add_child(x_axis)
-	add_child(particle)
+	add_child(particle1)
 	add_child(sin_label)
 	add_child(cos_label)
 	add_child(x_velocity_spinner)
@@ -189,7 +192,7 @@ func update_particle():
 	
 	particle_position += particle_velocity
 	
-	particle.position = particle_position
+	particle1.position = particle_position
 	
 
 func open_browser_link(url: String):
@@ -212,5 +215,11 @@ func _physics_process(delta):
 	#In this case our curve is just a simple "circle". No fancy curves yet.
 	update_particle()
 	
+
+func gravitate_to(v: Vector2):
+	var grav  = Vector2(0,0)
+	var distance = v.distance_to(v)
+#	grav = get_vector2_with_length()
+
 func _process(delta):
 	pass
