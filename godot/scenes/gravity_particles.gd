@@ -26,6 +26,8 @@ var particle_position = Vector2()
 
 var particle_velocity = Vector2()
 
+var particle_mass = 100
+
 var current_sinusoidal_output_val = 0
 var current_cos_output_val = 0
 var current_sin_input_val = 0
@@ -47,8 +49,10 @@ var x_acceleration_label = Label.new()
 var radius = 100
 
 var code_link = RichTextLabel.new()
+var rsty_particle = RstyParticle2.new(RstyVector2.new(0.0,0.0), 1, PI)
 
-var v: RstyVector2 = RstyVector2.new()
+
+var v: RstyVector2 = RstyVector2.new(0, 0)
 
 var y_velocity: float = 0
 var x_velocity: float = 2
@@ -216,7 +220,7 @@ func _physics_process(delta):
 	update_particle()
 	
 
-func gravitate_to(v: Vector2):
+func from_particle_gravitate_to(particle: Vector2, v: Vector2):
 	var grav  = Vector2(0,0)
 	var distance = v.distance_to(v)
 #	grav = get_vector2_with_length()
