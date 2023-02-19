@@ -48,7 +48,7 @@ var radius = 100
 
 var code_link = RichTextLabel.new()
 
-var v: RstyVector2 = RstyVector2.new()
+var v: RstyVector2 = RstyVector2.new(0,0)
 
 var y_velocity: float = 0
 var x_velocity: float = 2

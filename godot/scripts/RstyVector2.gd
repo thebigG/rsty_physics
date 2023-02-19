@@ -1,17 +1,18 @@
 class_name RstyVector2
 
+var x: float
+var y: float
+
+
+func _init(x: float, y: float) -> void:
+	self.x = x
+	self.y = y
+
 func distance(x1: float, y1: float, x2: float, y2: float) -> float:
 	var a = x2 - x1
 	var b = y2 - y1
 
 	return sqrt(pow(a, 2) + pow(b, 2))
-
-var x: float
-var y: float
-
-func _init(x: float, y: float) -> void:
-	self.x = x
-	self.y = y
 
 func get_x() -> float:
 	return self.x
