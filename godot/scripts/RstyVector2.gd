@@ -4,7 +4,7 @@ var x: float
 var y: float
 
 
-func _init(x: float, y: float) -> void:
+func _init(x: float = 0, y: float = 0) -> void:
 	self.x = x
 	self.y = y
 
@@ -69,3 +69,7 @@ func multiply_by(value: float) -> void:
 func divide_by(value: float) -> void:
 	self.x /= value
 	self.y /= value
+	
+	
+func get_godot_vector() -> Vector2:
+	return Vector2(self.x, self.y)

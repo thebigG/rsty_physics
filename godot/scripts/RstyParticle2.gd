@@ -6,7 +6,7 @@ var gravity: RstyVector2
 
 var mass: float
 
-func _init(position: RstyVector2, speed: float, direction: float, grav: float = 0) -> void:
+func _init(position: RstyVector2 = RstyVector2.new(), speed: float = 0, direction: float = 0, grav: float = 0) -> void:
 	self.position = RstyVector2.new(position.get_x(), position.get_y())
 	self.velocity = RstyVector2.new(0, 0)
 	self.velocity.set_length(speed)

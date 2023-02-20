@@ -19,10 +19,11 @@ var x_axis = Line2D.new();
 
 var Origin = Vector2(500,200);
 
-var particle1 = Sprite2D.new()
+var particle1_sprite = Sprite2D.new()
+var particle1 =  RstyParticle2.new()
 
 #var particle_position = Origin
-var particle_position = Vector2()
+var particle1_position = Vector2()
 
 var particle_velocity = Vector2()
 
@@ -68,15 +69,16 @@ func _ready():
 	var image = Image.load_from_file("res://assets/icon.svg")
 	var texture = ImageTexture.create_from_image(image)
 	
-	particle_position = Vector2(Origin)
-	particle1.texture = texture
-	particle1.position = particle_position
-	particle1.scale = Vector2(0.3,0.3)
-	particle1.modulate = Color(1, 0, 0, 0.5)
+	particle1_position = Vector2(Origin)
+	particle1_sprite.texture = texture
+	particle1.position.x = particle1_position.x
+	particle1.position.y = particle1_position.y
+	particle1_sprite.position = particle1.position.get_godot_vector()
+	particle1_sprite.scale = Vector2(0.3,0.3)
+	particle1_sprite.modulate = Color(1, 0, 0, 0.5)
 
 #	Have to do this since godot has no "set_length" for vectors. https://github.com/godotengine/godot/pull/37704
-	particle_velocity = get_vector2_with_length(particle_velocity, x_velocity)
-	particle_velocity = Vector2(2,2)
+	particle_velocity = Vector2(2,0)
 
 	y_axis.default_color = Color(Color.YELLOW)
 	y_axis.default_color.a = 0.25
@@ -151,13 +153,13 @@ func _ready():
 	code_link.size_flags_horizontal = 0
 	code_link.visible = true
 	code_link.meta_clicked.connect(open_browser_link)
-	
+	particle1.velocity = RstyVector2.new(particle_velocity.x, particle_velocity.y)
 
 	add_child(sin_wave)
 	add_child(cos_wave)
 	add_child(y_axis)
 	add_child(x_axis)
-	add_child(particle1)
+	add_child(particle1_sprite)
 	add_child(sin_label)
 	add_child(cos_label)
 	add_child(x_velocity_spinner)
@@ -181,22 +183,20 @@ func get_vector2_with_angle(v: Vector2, angle: float) -> Vector2:
 
 
 func update_particle():
-	if(particle_position.x > Origin.x + x_axis_length or particle_position.x < Origin.x - x_axis_length):
-		x_velocity  = -1 * x_velocity
+	if(particle1.position.x > Origin.x  + x_axis_length or particle1.position.x < Origin.x - x_axis_length):
 		x_acceleration = -1 * x_acceleration
+		particle1.velocity.x  = -1 * particle1.velocity.x
 	
 	x_acceleration_spinner.value = x_acceleration
-	
+
 	if(apply_x_accel):
-		x_velocity += x_acceleration
+		particle1.accelerate(RstyVector2.new(x_acceleration, 0))
 	
-	x_velocity_spinner.value = x_velocity	
-	particle_velocity.y = y_velocity
-	particle_velocity.x = x_velocity
+	x_velocity_spinner.value = particle1.velocity.x	
 	
-	particle_position += particle_velocity
+	particle1.update()
 	
-	particle1.position = particle_position
+	particle1_sprite.position = particle1.position.get_godot_vector() 
 	
 
 func open_browser_link(url: String):
@@ -216,7 +216,6 @@ func update_x_acceleration(value: float):
 	x_acceleration = value
 
 func _physics_process(delta):
-	#In this case our curve is just a simple "circle". No fancy curves yet.
 	update_particle()
 	
 
