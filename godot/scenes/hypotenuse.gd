@@ -88,7 +88,7 @@ func _ready():
 	
 	code_link.bbcode_enabled = true
 
-	code_link.text = "[url=https://github.com/thebigG/rsty_physics/blob/main/godot/hypotenuse.gd][/https://github.com/thebigG/rsty_physics/blob/main/godot/hypotenuse.gd]"
+	code_link.text = "[url=https://github.com/thebigG/rsty_physics/blob/main/godot/scenes/hypotenuse.gd][/https://github.com/thebigG/rsty_physics/blob/main/godot/scenes/hypotenuse.gd]"
 	code_link.meta_underlined = true
 	code_link.size = Vector2(600,100)
 	code_link.position = Vector2(origin)

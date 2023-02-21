@@ -175,7 +175,7 @@ func _ready():
 	
 	code_link.bbcode_enabled = true
 
-	code_link.text = "[url=https://github.com/thebigG/rsty_physics/blob/main/godot/dot_product.gd][/https://github.com/thebigG/rsty_physics/blob/main/godot/dot_product.gd]"
+	code_link.text = "[url=https://github.com/thebigG/rsty_physics/blob/main/godot/scenes/dot_product.gd][/https://github.com/thebigG/rsty_physics/blob/main/godot/scenes/dot_product.gd]"
 	code_link.meta_underlined = true
 	code_link.size = Vector2(600,100)
 	code_link.position = Vector2(origin)

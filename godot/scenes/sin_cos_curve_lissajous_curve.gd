@@ -136,7 +136,7 @@ func _ready():
 	
 	code_link.bbcode_enabled = true
 
-	code_link.text = "[url=https://github.com/thebigG/rsty_physics/blob/main/godot/sin_cos_curve_lissajous_curve.gd][/https://github.com/thebigG/rsty_physics/blob/main/godot/sin_cos_curve_lissajous_curve.gd]"
+	code_link.text = "[url=https://github.com/thebigG/rsty_physics/blob/main/godot/scenes/sin_cos_curve_lissajous_curve.gd][/https://github.com/thebigG/rsty_physics/blob/main/godot/scenes/sin_cos_curve_lissajous_curve.gd]"
 	code_link.meta_underlined = true
 	code_link.size = Vector2(600,100)
 	code_link.position = Vector2(origin)
