@@ -121,15 +121,14 @@ use godot::sys::types::OpaquePackedVector2Array;
 //             y: self.y,
 //         }
 //     }
-    //At the moment gd-rust does not have support for godot properties.
-    // So for now setters will have to do.
-    // #[func]
-    // fn init(&mut self, new_position: Vector2, new_speed: f32, direction: f32){
-    //     self.position = new_position;
-    //     let v = new_position.as_inner();
-    // }
+//At the moment gd-rust does not have support for godot properties.
+// So for now setters will have to do.
+// #[func]
+// fn init(&mut self, new_position: Vector2, new_speed: f32, direction: f32){
+//     self.position = new_position;
+//     let v = new_position.as_inner();
 // }
-
+// }
 
 // #[derive(GodotClass)]
 // #[class(base=Node)]
@@ -166,8 +165,6 @@ use godot::sys::types::OpaquePackedVector2Array;
 //         // self.draw_circle();
 //     }
 // }
-
-
 
 // #[godot_api]
 // impl GodotExt for RstyParticle2 {
