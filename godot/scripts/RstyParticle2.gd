@@ -5,6 +5,7 @@ var velocity: RstyVector2
 var gravity: RstyVector2
 
 var mass: float
+var radius: float
 
 func _init(position: RstyVector2 = RstyVector2.new(), speed: float = 0, direction: float = 0, grav: float = 0) -> void:
 	self.position = RstyVector2.new(position.get_x(), position.get_y())
