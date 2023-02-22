@@ -1,3 +1,6 @@
-[gd_scene format=3 uid="uid://c680gpxtxwigm"]
+[gd_scene load_steps=2 format=3 uid="uid://c680gpxtxwigm"]
+
+[ext_resource type="Script" path="res://scenes/fundamental_physics/ch1/structure_of_mechanics.gd" id="1_fy70f"]
 
 [node name="structure_of_mechanics" type="Node"]
+script = ExtResource("1_fy70f")
