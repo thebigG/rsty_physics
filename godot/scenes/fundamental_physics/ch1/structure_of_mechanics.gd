@@ -15,6 +15,12 @@ func _ready():
 func eq_one_point_six(t: float, a: float, b: float, c: float):
 	return (1/2 * (a  * pow(t, 2))) + (b * t) + c
 
+
+#problem 3
+#Romeo is at x = 0 m at t = 0 s when he sees Juliet at x = 6 m.
+
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
