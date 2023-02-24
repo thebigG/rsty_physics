@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://dbq0c23rn4ff1"]
+
+[node name="DotProduct" type="Main2D"]
+visible = false
