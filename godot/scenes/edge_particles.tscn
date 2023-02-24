@@ -5,3 +5,9 @@
 [node name="EdgeParticles" type="Main2D"]
 visible = false
 script = ExtResource("1_ai4jo")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
