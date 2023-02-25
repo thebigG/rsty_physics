@@ -3,3 +3,4 @@ entry_symbol = "gdextension_rust_init"
 
 [libraries]
 linux.x86_64  = "res://../rsty_physics/target/debug/librsty_physics.so"
+windows.64 = "res://../rsty_physics/target/debug/rsty_physics.dll"
