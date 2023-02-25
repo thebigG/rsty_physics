@@ -1,4 +1,7 @@
-[gd_scene format=3 uid="uid://dbq0c23rn4ff1"]
+[gd_scene load_steps=2 format=3 uid="uid://dbq0c23rn4ff1"]
 
-[node name="DotProduct" type="Main2D"]
+[ext_resource type="Script" path="res://scenes/cross_product.gd" id="1_h8pbp"]
+
+[node name="CrossProduct" type="Main2D"]
 visible = false
+script = ExtResource("1_h8pbp")
