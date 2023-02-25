@@ -1,4 +1,4 @@
-extends Main2D
+extends Node3D
 
 #TODO: Add curves. Play with radius, x, y, etc
 #Animates Godot in a circle using cos/x, sin/y and radius around a center_x,center_y 
@@ -7,7 +7,7 @@ extends Main2D
 #This will probably stay like this until https://github.com/godot-rust/gdextension/issues/55
 #is resolved. Then all this code will be moved into
 #a rust gdextension; that it is  modular and scalable.
-var sin_wave = SineWave2D.new()
+var sin_wave = Line2D.new()
 var cos_wave = Line2D.new()
 
 var y_axis = Line2D.new()
@@ -87,8 +87,8 @@ func _ready():
 
 	
 	sin_wave.default_color = Color.PURPLE
-	super.new_game()
-	sin_wave.points = get_sin_full_circle_2dvectors(30, 50, 2)
+#	super.new_game()
+#	sin_wave.points = get_sin_full_circle_2dvectors(30, 50, 2)
 	sin_wave.position = origin
 	sin_wave.visible = false
 	cos_wave.visible = false
@@ -204,6 +204,8 @@ func _ready():
 	add_child(dot_product_normalized_label)
 	add_child(code_link)
 	add_child(angle_between_label)
+	
+	line(Vector3(0,0,0), Vector3(100,100,100))
 
 
 func open_browser_link(url: String):
@@ -280,8 +282,6 @@ func _physics_process(delta):
 	dot_product_normalized_label.text = "Dot Product Normalized:" + str(dot_product_normalized_value)	
 	dot_product_normalized_label.text = "Dot Product Normalized:" + str(dot_product_normalized_value)
 	angle_between_label.text = "Angle Between Vectors:" + str(snapped(rad_to_deg(angle_between_value), 0.001))
-#	print(angle_between_value)6
-	pass
 
 
 func dot_product(a: Vector2, b: Vector2):
@@ -304,6 +304,30 @@ func angle_between(a: Vector2, b: Vector2):
 	var mag_b = magnitude(b)
 	var a_result = acos(dp/mag_a/mag_b)
 	return a_result
+
+
+
+func line(pos1: Vector3, pos2: Vector3, color = Color.WHITE_SMOKE) -> MeshInstance3D:
+	var mesh_instance := MeshInstance3D.new()
+	var immediate_mesh := ImmediateMesh.new()
+	var material := ORMMaterial3D.new()
+	
+	mesh_instance.mesh = immediate_mesh
+	mesh_instance.cast_shadow = false
+
+	immediate_mesh.surface_begin(Mesh.PRIMITIVE_LINES, material)
+	immediate_mesh.surface_add_vertex(pos1)
+	immediate_mesh.surface_add_vertex(pos2)
+	immediate_mesh.surface_end()	
+	
+	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	material.albedo_color = color
+	
+	add_child(mesh_instance)
+	
+	return mesh_instance
+
+
 
 func _process(delta):
 	pass

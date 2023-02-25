@@ -2,6 +2,6 @@
 
 [ext_resource type="Script" path="res://scenes/cross_product.gd" id="1_h8pbp"]
 
-[node name="CrossProduct" type="Main2D"]
+[node name="CrossProduct" type="Node3D"]
 visible = false
 script = ExtResource("1_h8pbp")
