@@ -210,14 +210,14 @@ func open_browser_link(url: String):
 	print(url)
 	OS.shell_open(url)
 
-func get_cos_full_circle_2dvectors(degrees_delta: int, scale: int, number_of_phases: int ) -> Array:
-	var points = []
-	var i = 0;
-	while i < number_of_phases * (2 * PI):
-		var y = cos(i)
-		points.append(Vector2(i*scale, y*scale))
-		i += deg_to_rad(degrees_delta)
-	return points
+#func get_cos_full_circle_2dvectors(degrees_delta: int, scale: int, number_of_phases: int ) -> Array:
+#	var points = []
+#	var i = 0;
+#	while i < number_of_phases * (2 * PI):
+#		var y = cos(i)
+#		points.append(Vector2(i*scale, y*scale))
+#		i += deg_to_rad(degrees_delta)
+#	return points
 
 
 func _input(event):

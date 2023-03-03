@@ -26,8 +26,6 @@ var current_cos_input_val = 0
 var output_scale = 50
 
 var sin_output_offset = origin.y  # Added to sin_output
-var sin_label = CheckButton.new()
-var cos_label = CheckButton.new()
 
 var center_x = origin.x
 var center_y = origin.y
@@ -64,13 +62,15 @@ var angle_between_value = angle_between(Vector2(red_x2, red_y2), Vector2(blue_x2
 
 var code_link = RichTextLabel.new()
 
+var mesh_instance := MeshInstance3D.new()
+var immediate_mesh := ImmediateMesh.new()
+var material := ORMMaterial3D.new()
+
 #var particle: Particle2D = Particle2D.new()
 
 # Called when the node e6nters the scene tree for the first time.
 func _ready():
 #	OS.shell_open("google.com")
-	var image = Image.load_from_file("res://assets/icon.svg")
-	var texture = ImageTexture.create_from_image(image)
 
 	red_vector_shape.position = origin
 	blue_vector_shape.position = origin
@@ -95,11 +95,6 @@ func _ready():
 
 	cos_wave.points = get_cos_full_circle_2dvectors(30, 50, 2)
 	cos_wave.position = origin
-	
-	sin_label.text = "Sin"
-	cos_label.text = "Cos"
-	cos_label.position.y += 25
-	sin_label.add_theme_color_override("font_color", sin_wave.default_color)
 	
 	blue_y2_spinner.position.y += 50
 	blue_y2_spinner.step = vector_step
@@ -190,8 +185,6 @@ func _ready():
 	add_child(x_axis)
 	add_child(red_vector_shape)
 	add_child(blue_vector_shape)
-	add_child(sin_label)
-	add_child(cos_label)
 	add_child(blue_y2_spinner)
 	add_child(blue_y2_label)
 	add_child(blue_x2_spinner)
@@ -204,8 +197,9 @@ func _ready():
 	add_child(dot_product_normalized_label)
 	add_child(code_link)
 	add_child(angle_between_label)
-	
-	line(Vector3(0,0,0), Vector3(100,100,100))
+#	line(Vector3(0,0,0), Vector3(100,100,100))
+#	add_child(mesh_instance)
+	line_from_docs()
 
 
 func open_browser_link(url: String):
@@ -306,26 +300,43 @@ func angle_between(a: Vector2, b: Vector2):
 	return a_result
 
 
+func _exit_tree():
+	print("exit********")
+	mesh_instance.queue_free()
+	print("parent:" + str(mesh_instance.get_parent()))
 
-func line(pos1: Vector3, pos2: Vector3, color = Color.WHITE_SMOKE) -> MeshInstance3D:
-	var mesh_instance := MeshInstance3D.new()
-	var immediate_mesh := ImmediateMesh.new()
-	var material := ORMMaterial3D.new()
-	
+func line(pos1: Vector3, pos2: Vector3, color = Color.WHITE_SMOKE):
 	mesh_instance.mesh = immediate_mesh
-	mesh_instance.cast_shadow = false
+#	mesh_instance.cast_shadow = false
 
 	immediate_mesh.surface_begin(Mesh.PRIMITIVE_LINES, material)
 	immediate_mesh.surface_add_vertex(pos1)
 	immediate_mesh.surface_add_vertex(pos2)
 	immediate_mesh.surface_end()	
-	
+
 	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	material.albedo_color = color
 	
+#	return mesh_instance
+
+func line_from_docs():
+	print("line_from_docs")
+	var vertices = PackedVector3Array()
+	vertices.push_back(Vector3(0, 0, 0))
+	vertices.push_back(Vector3(100,100,100))
+
+	# Initialize the ArrayMesh.
+	var arr_mesh = ArrayMesh.new()
+	var arrays = []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+
+	# Create the Mesh.
+	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_LINES, arrays)
+#	 mesh_instance = MeshInstance3D.new()
+	mesh_instance.mesh = arr_mesh
+	print(mesh_instance.position)
 	add_child(mesh_instance)
-	
-	return mesh_instance
 
 
 

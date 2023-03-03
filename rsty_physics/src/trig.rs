@@ -14,7 +14,7 @@ use godot::private::You_forgot_the_attribute__godot_api;
 use std::f64::consts::PI;
 
 use godot::builtin::VariantType::PackedVector2Array;
-use godot::builtin::{Array, FromVariant, GodotString, ToVariant};
+use godot::builtin::{array, FromVariant, GodotString, ToVariant};
 use godot::prelude::Variant;
 use godot::sys::types::OpaquePackedVector2Array;
 
@@ -399,7 +399,7 @@ impl SineWave2D {
     #[func]
     fn draw_wave(&mut self) -> Array {
         // let array = Array::from(&[1, 2]);
-        let array = Array::from(&[Vector2::new(0.0, 100.0)]);
+        let array = Array::from(array![Vector2::new(0.0, 100.0).to_variant()]);
         println!("draw_wave1...");
 
         array
@@ -521,7 +521,8 @@ impl Main2D {
         scale: i32,
         number_of_phases: i32,
     ) -> Array {
-        let mut points = Array::from(&[Vector2::new(0.0, 100.0)]);
+        // let mut points = Array::from(&[Vector2::new(0.0, 100.0)]);
+        let mut points = array![Vector2::new(0.0, 100.0).to_variant()];
         let mut i: f32 = 0.0;
         // TODO:cleanup and remove all these casts
         let scale_f32: f32 = scale as f32;
@@ -541,8 +542,8 @@ impl Main2D {
         degrees_delta: i32,
         scale: i32,
         number_of_phases: i32,
-    ) -> Array {
-        let mut points = Array::from(&[Vector2::new(0.0, 100.0)]);
+    ) -> TypedArray<Variant> {
+        let mut points = array![Vector2::new(0.0, 100.0).to_variant()];
         let mut i: f32 = 0.0;
         // TODO:cleanup and remove all these casts
         let scale_f32: f32 = scale as f32;
