@@ -320,6 +320,7 @@ func line(pos1: Vector3, pos2: Vector3, color = Color.WHITE_SMOKE):
 #	return mesh_instance
 
 func line_from_docs():
+	#I've been thinking about this the wrong way all this time. Draw  3d cylinders instead.
 	print("line_from_docs")
 	var vertices = PackedVector3Array()
 	vertices.push_back(Vector3(0, 0, 0))
