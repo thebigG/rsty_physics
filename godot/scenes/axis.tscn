@@ -1,7 +1,20 @@
 [gd_scene load_steps=2 format=3 uid="uid://b3md6opqgpgr"]
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_pgbui"]
+[sub_resource type="CylinderMesh" id="CylinderMesh_874vo"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 3.54
 
-[node name="Axis" type="MeshInstance3D"]
+[node name="Axis" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.400134, 1.06023, 0.543106)
-mesh = SubResource("CylinderMesh_pgbui")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.238007, 0)
+mesh = SubResource("CylinderMesh_874vo")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.221494, -0.873721, -0.433074, -0.956116, 0.281921, -0.0797703, 0.19179, 0.3964, -0.897822, -1.47718, 14.0553, 34.1932)
+light_angular_distance = 32.23
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.942052, 0.335468, 0, -0.335468, -0.942052, 0, 1.00999, -10.6946)
