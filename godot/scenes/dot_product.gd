@@ -184,26 +184,26 @@ func _ready():
 	code_link.visible = true 
 	code_link.meta_clicked.connect(open_browser_link)
 	
-	add_child(sin_wave)
-	add_child(cos_wave)
-	add_child(y_axis)
-	add_child(x_axis)
-	add_child(red_vector_shape)
-	add_child(blue_vector_shape)
-	add_child(sin_label)
-	add_child(cos_label)
-	add_child(blue_y2_spinner)
-	add_child(blue_y2_label)
-	add_child(blue_x2_spinner)
-	add_child(blue_x2_label)
-	add_child(red_x2_spinner)
-	add_child(red_x2_label)
-	add_child(red_y2_spinner)
-	add_child(red_y2_label)
-	add_child(dot_product_label)
-	add_child(dot_product_normalized_label)
-	add_child(code_link)
-	add_child(angle_between_label)
+#	add_child(sin_wave)
+#	add_child(cos_wave)
+#	add_child(y_axis)
+#	add_child(x_axis)
+#	add_child(red_vector_shape)
+#	add_child(blue_vector_shape)
+#	add_child(sin_label)
+#	add_child(cos_label)
+#	add_child(blue_y2_spinner)
+#	add_child(blue_y2_label)
+#	add_child(blue_x2_spinner)
+#	add_child(blue_x2_label)
+#	add_child(red_x2_spinner)
+#	add_child(red_x2_label)
+#	add_child(red_y2_spinner)
+#	add_child(red_y2_label)
+#	add_child(dot_product_label)
+#	add_child(dot_product_normalized_label)
+#	add_child(code_link)
+#	add_child(angle_between_label)
 
 
 func open_browser_link(url: String):
@@ -270,16 +270,16 @@ func update_blue_y2(value: float):
 # TODO:Draw This Ellipses
 func _physics_process(delta):
 	#In this case our curve is just a simple "ellipses". No fancy curves yet.
-	current_sinusoidal_output_val = sin(current_sin_input_val) 
-	current_cos_output_val = cos(current_cos_input_val) 
-
-	current_sin_input_val += blue_x2
-	current_cos_input_val += blue_y2
-
-	dot_product_label.text = "Dot Product:" + str(dot_product_value)
-	dot_product_normalized_label.text = "Dot Product Normalized:" + str(dot_product_normalized_value)	
-	dot_product_normalized_label.text = "Dot Product Normalized:" + str(dot_product_normalized_value)
-	angle_between_label.text = "Angle Between Vectors:" + str(snapped(rad_to_deg(angle_between_value), 0.001))
+#	current_sinusoidal_output_val = sin(current_sin_input_val) 
+#	current_cos_output_val = cos(current_cos_input_val) 
+#
+#	current_sin_input_val += blue_x2
+#	current_cos_input_val += blue_y2
+#
+#	dot_product_label.text = "Dot Product:" + str(dot_product_value)
+#	dot_product_normalized_label.text = "Dot Product Normalized:" + str(dot_product_normalized_value)	
+#	dot_product_normalized_label.text = "Dot Product Normalized:" + str(dot_product_normalized_value)
+#	angle_between_label.text = "Angle Between Vectors:" + str(snapped(rad_to_deg(angle_between_value), 0.001))
 #	print(angle_between_value)6
 	pass
 
