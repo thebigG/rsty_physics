@@ -52,9 +52,11 @@ func select_view(selection: int):
 
 
 func update_views(selection: int):
+	print("***********************")
 	for child in get_children():
 		if child.name != views.name:
 			child.set("visible", false)
+			print("NOT visible:" + child.name)
 			if child.name == views.get_item_text(selection):
 				current_node = child
 				print("visible:" + current_node.name)
