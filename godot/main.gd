@@ -12,6 +12,7 @@ func _ready():
 	reset.text = "Reset"
 	reset.name = "reset"
 	var scene_paths = dir_contents("res://scenes")
+	print(scene_paths)
 	current_node = init_scene(load(scene_paths[0]))
 	add_child(current_node)
 	for scene_path in scene_paths.slice(1, len(scene_paths)):
