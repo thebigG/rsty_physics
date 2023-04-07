@@ -27,6 +27,10 @@ var cos_label = Label.new()
 var code_link = RichTextLabel.new()
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	#3d nodes don't play as nice when reloading the scene
+	#So we only allow the nodes that are part of the "reloadable"
+	#group to be reloaded.
+	self.add_to_group("reloadable")
 	print("ready*************")
 	var image = Image.load_from_file("res://assets/icon.svg")
 	var texture = ImageTexture.create_from_image(image)

@@ -100,6 +100,12 @@ func _ready():
 	code_link.visible = true 
 	code_link.meta_clicked.connect(open_browser_link)
 	
+	
+	#3d nodes don't play as nice when reloading the scene
+	#So we only allow the nodes that are part of the "reloadable"
+	#group to be reloaded.
+	self.add_to_group("reloadable")
+	
 	add_child(sin_wave)
 	add_child(cos_wave)
 	add_child(y_axis)

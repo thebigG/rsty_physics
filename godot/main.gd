@@ -38,6 +38,8 @@ func init_scene(scene):
 
 func reset_node():
 	var current_node_name = current_node.name
+	if not(current_node.is_in_group("reloadable")):
+		return
 	var new_scene = scene_dict[current_node_name]
 	current_node.queue_free()
 #	TODO:Needs to be updated to get current scene of current scene. A Map maybe?
