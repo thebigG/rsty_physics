@@ -10,8 +10,8 @@ const DECELERATION = 4
 @onready var start_position = position
 
 func _physics_process(delta):
-	if Input.is_action_just_pressed(&"exit"):
-		get_tree().quit()
+#	if Input.is_action_just_pressed(&"exit"):
+#		get_tree().quit()
 	if Input.is_action_just_pressed(&"reset_position") or global_position.y < - 6:
 		# Pressed the reset key or fell off the ground.
 		position = start_position

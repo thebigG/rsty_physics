@@ -68,11 +68,11 @@ func update_views(selection: int):
 # I think this is a much better way of updating views as we switch between them
 # I think this will also disable the physics of those nodes.
 func disable_and_hide_node(node:Node) -> void:
-	node.process_mode = 4 # = Mode: Disabled
+	node.process_mode = Node.PROCESS_MODE_DISABLED  # = Mode: Disabled
 	node.hide()
 
 func enable_and_show_node(node:Node) -> void:
-	node.process_mode = 0 # = Mode: Inherit
+	node.process_mode = Node.PROCESS_MODE_INHERIT # = Mode: Inherit
 	node.show()
 
 
