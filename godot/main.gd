@@ -57,13 +57,16 @@ func select_view(selection: int):
 func update_views(selection: int):
 	for child in get_children():
 		if child.name != views.name:
-			child.set("visible", false)
+#			child.set("visible", false)
+			disable_and_hide_node(child)
 			if child.name == views.get_item_text(selection):
 				current_node = child
 				print("visible:" + current_node.name)
-				current_node.set("visible", true)
+#				current_node.set("visible", true)
+				enable_and_show_node(child)
 			if child.name == "reset":
-				child.set("visible", true)
+#				child.set("visible", true)
+				enable_and_show_node(child)
 
 # I think this is a much better way of updating views as we switch between them
 # I think this will also disable the physics of those nodes.
