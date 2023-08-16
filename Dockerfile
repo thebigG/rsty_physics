@@ -21,7 +21,7 @@ WORKDIR /home/lgomez
 COPY --chown=lgomez:lgomez . /home/lgomez
 RUN rustup component add rustfmt
 RUN rustfmt --check /home/lgomez/rsty_physics/src/*.rs
-RUN cd /home/lgomez/ && wget https://downloads.tuxfamily.org/godotengine/4.0/Godot_v4.0-stable_linux.x86_64.zip  \
+RUN cd /home/lgomez/ && wget https://downloads.tuxfamily.org/godotengine/4.1/Godot_v4.1-stable_linux.x86_64.zip  \
     && unzip Godot_v4.0-stable_linux.x86_64.zip
 #These might be useful for wasm deployments in the future.
 #RUN rustup target add wasm32-unknown-unknown
