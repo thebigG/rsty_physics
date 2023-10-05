@@ -4,7 +4,7 @@
 nuke_images:
 	docker rmi -f $(docker images -aq)
 
-buid:
+build:
 	cd rsty_physics && cargo build
 
 build_image: 

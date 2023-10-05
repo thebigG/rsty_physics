@@ -7,7 +7,7 @@ use godot::builtin::Vector2;
 use godot::engine::node::InternalMode;
 use godot::engine::packed_scene::GenEditState;
 use godot::engine::utilities::{atan2, cos, deg_to_rad, pow, sin, sqrt};
-use godot::engine::{Line2D, Marker2D, PathFollow2D, RigidBody2D, Timer};
+use godot::engine::{Line2D, Line2DVirtual, Marker2D, PathFollow2D, RigidBody2D, Timer};
 use godot::prelude::*;
 // use rand::Rng as _;
 use godot::private::You_forgot_the_attribute__godot_api;
@@ -397,7 +397,7 @@ impl SineWave2D {
     }
 
     #[func]
-    fn draw_wave(&mut self) -> Array {
+    fn draw_wave(&mut self) -> Array<Variant> {
         // let array = Array::from(&[1, 2]);
         let array = Array::from(array![Vector2::new(0.0, 100.0).to_variant()]);
         println!("draw_wave1...");
@@ -415,7 +415,7 @@ impl SineWave2D {
 }
 
 #[godot_api]
-impl GodotExt for SineWave2D {
+impl Line2DVirtual for SineWave2D {
     fn init(base: Base<Line2D>) -> Self {
         SineWave2D {
             // mob_scene: PackedScene::new(),
@@ -520,7 +520,7 @@ impl Main2D {
         degrees_delta: i32,
         scale: i32,
         number_of_phases: i32,
-    ) -> Array {
+    ) -> Array<Variant> {
         // let mut points = Array::from(&[Vector2::new(0.0, 100.0)]);
         let mut points = array![Vector2::new(0.0, 100.0).to_variant()];
         let mut i: f32 = 0.0;
@@ -542,7 +542,7 @@ impl Main2D {
         degrees_delta: i32,
         scale: i32,
         number_of_phases: i32,
-    ) -> TypedArray<Variant> {
+    ) -> Array<Variant> {
         let mut points = array![Vector2::new(0.0, 100.0).to_variant()];
         let mut i: f32 = 0.0;
         // TODO:cleanup and remove all these casts
@@ -567,7 +567,7 @@ impl Main2D {
 }
 
 #[godot_api]
-impl GodotExt for Main2D {
+impl Line2DVirtual for Main2D {
     fn init(base: Base<Node2D>) -> Self {
         Main2D {
             // mob_scene: PackedScene::new(),
