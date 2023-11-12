@@ -1,5 +1,11 @@
 .ONESHELL:
 
+check-format:
+	rustfmt --check rsty_physics/src/*.rs
+
+format:
+	rustfmt rsty_physics/src/*.rs
+
 
 nuke_images:
 	docker rmi -f $(docker images -aq)

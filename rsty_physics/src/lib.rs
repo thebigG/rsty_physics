@@ -8,8 +8,8 @@ use godot::prelude::*;
 
 struct RustyPhysics;
 
-mod trig;
 mod health_body;
+mod trig;
 
 //At the moment testing godot code the Rust way is not very trivial:https://github.com/godot-rust/gdextension/issues/36
 // #[cfg(test)]
