@@ -8,6 +8,8 @@ use godot::prelude::*;
 
 struct RustyPhysics;
 
+mod aligned_progress_bar;
+mod core_utils;
 mod health_body;
 mod trig;
 #[gdextension]

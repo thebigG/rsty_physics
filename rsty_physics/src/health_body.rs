@@ -3,10 +3,11 @@ use godot::engine::ICharacterBody2D;
 use godot::engine::CharacterBody2D;
 use godot::prelude::*;
 
-enum State {
-    ALIVE = 1,
-    DEAD = 2,
-}
+// TODO:Implement when enum properties are supported
+// enum State {
+//     ALIVE = 1,
+//     DEAD = 2,
+// }
 
 #[derive(GodotClass)]
 #[class(base=CharacterBody2D)]
@@ -14,11 +15,16 @@ pub struct HealthBody2D {
     score: i64,
     #[base]
     base: Base<CharacterBody2D>,
-    max_health: real,
-    zero_health: real,
+    #[var(get = get_max_health)]
+    MAX_HEALTH: real,
+    #[var(get = get_zero_health)]
+    ZERO_HEALTH: real,
+    #[var(get = get_health)]
     health: real,
+    #[var(get = get_damage_interval, set = set_damage_interval)]
     damage_interval: real,
-    state: State,
+    #[var(get = get_state)]
+    state: i32,
 }
 #[godot_api]
 impl HealthBody2D {
@@ -29,12 +35,12 @@ impl HealthBody2D {
 
     #[func]
     fn damage(&mut self) {
-        if self.health <= self.zero_health {
+        if self.health <= self.ZERO_HEALTH {
             return;
         }
         self.health -= self.damage_interval;
-        if self.health <= self.zero_health {
-            self.state = State::DEAD;
+        if self.health <= self.ZERO_HEALTH {
+            self.state = 2;
         }
     }
 
@@ -50,12 +56,12 @@ impl HealthBody2D {
 
     #[func]
     fn get_max_health(&mut self) -> real {
-        self.max_health
+        self.MAX_HEALTH
     }
 
     #[func]
     fn get_zero_health(&mut self) -> real {
-        self.zero_health
+        self.ZERO_HEALTH
     }
 
     #[func]
@@ -65,10 +71,11 @@ impl HealthBody2D {
 
     #[func]
     fn get_state(&mut self) -> i32 {
-        match self.state {
-            State::ALIVE => 1,
-            State::DEAD => 0,
-        }
+        // match self.state {
+        //     State::ALIVE => 1,
+        //     State::DEAD => 0,
+        // }
+        self.state
     }
 }
 
@@ -78,11 +85,11 @@ impl ICharacterBody2D for HealthBody2D {
         HealthBody2D {
             base,
             score: 0,
-            max_health: 1.0,
-            zero_health: 0.0,
+            MAX_HEALTH: 1.0,
+            ZERO_HEALTH: 0.0,
             health: 0.0,
             damage_interval: 0.0,
-            state: State::ALIVE,
+            state: 1,
         }
     }
 
