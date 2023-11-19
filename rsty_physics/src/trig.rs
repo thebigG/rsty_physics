@@ -1,38 +1,18 @@
-use std::borrow::Borrow;
-// use crate::hud::Hud;
-// use crate::mob;
-// use crate::player;
-// use backtrace::Backtrace;
 use godot::builtin::Vector2;
 use godot::engine::node::InternalMode;
 use godot::engine::packed_scene::GenEditState;
 use godot::engine::utilities::{atan2, cos, deg_to_rad, pow, sin, sqrt};
-use godot::engine::{Line2D, Line2DVirtual, Marker2D, PathFollow2D, RigidBody2D, Timer};
+use godot::engine::{ILine2D, Line2D, Marker2D, PathFollow2D, RigidBody2D, Timer};
 use godot::prelude::*;
-// use rand::Rng as _;
 use godot::private::You_forgot_the_attribute__godot_api;
+use std::borrow::Borrow;
 use std::f64::consts::PI;
 
+use godot::builtin::array;
+use godot::builtin::meta::ClassName;
 use godot::builtin::VariantType::PackedVector2Array;
-use godot::builtin::{array, FromVariant, GodotString, ToVariant};
 use godot::prelude::Variant;
 use godot::sys::types::OpaquePackedVector2Array;
-
-// use godot::sys::VariantType::Vector2;
-
-// struct rsty_Vector2 {
-//     x: f32,
-//     y: f32
-// }
-//
-// impl rsty_Vector2{
-//     fn new() -> rsty_Vector2{
-//         rsty_Vector2{
-//             x: 0.0,
-//             y: 0.0,
-//         }
-//     }
-// }
 
 ///A particle made up of velocity and position
 // #[derive(GodotClass)]
@@ -415,7 +395,7 @@ impl SineWave2D {
 }
 
 #[godot_api]
-impl Line2DVirtual for SineWave2D {
+impl ILine2D for SineWave2D {
     fn init(base: Base<Line2D>) -> Self {
         SineWave2D {
             // mob_scene: PackedScene::new(),
@@ -441,12 +421,39 @@ impl Line2DVirtual for SineWave2D {
 
 // Deriving GodotClass makes the class available to Godot
 #[derive(GodotClass)]
+// #[class(init)]
 #[class(base=Node2D)]
 pub struct Main2D {
     score: i64,
     #[base]
     base: Base<Node2D>,
 }
+
+#[godot_api]
+impl ILine2D for Main2D {
+    fn init(base: Base<Node2D>) -> Self {
+        Main2D {
+            // mob_scene: PackedScene::new(),
+            score: 0,
+            base,
+            // music: None,
+            // death_sound: None,
+        }
+    }
+
+    fn ready(&mut self) {
+        // Note: this is downcast during load() -- completely type-safe thanks to type inference!
+        // If the resource does not exist or has an incompatible type, this panics.
+        // There is also try_load() if you want to check whether loading succeeded.
+        // self.mob_scene = load("res://Mob.tscn");
+        // self.music = Some(self.base.get_node_as("Music"));
+        // self.death_sound = Some(self.base.get_node_as("DeathSound"));
+        println!("Main...");
+        self.full_circle_sin();
+        self.main_draw_circle();
+    }
+}
+
 #[godot_api]
 impl Main2D {
     #[func]
@@ -566,27 +573,15 @@ impl Main2D {
     // }
 }
 
-#[godot_api]
-impl Line2DVirtual for Main2D {
-    fn init(base: Base<Node2D>) -> Self {
-        Main2D {
-            // mob_scene: PackedScene::new(),
-            score: 0,
-            base,
-            // music: None,
-            // death_sound: None,
-        }
-    }
-
-    fn ready(&mut self) {
-        // Note: this is downcast during load() -- completely type-safe thanks to type inference!
-        // If the resource does not exist or has an incompatible type, this panics.
-        // There is also try_load() if you want to check whether loading succeeded.
-        // self.mob_scene = load("res://Mob.tscn");
-        // self.music = Some(self.base.get_node_as("Music"));
-        // self.death_sound = Some(self.base.get_node_as("DeathSound"));
-        println!("Main...");
-        self.full_circle_sin();
-        self.main_draw_circle();
-    }
-}
+// #[godot_api]
+// impl GodotClass for Main2D
+// {
+//     type Base = ();
+//     type Declarer = ();
+//     type Mem = ();
+//     const INIT_LEVEL: Option<InitLevel> = None;
+//
+//     fn class_name() -> ClassName {
+//         todo!()
+//     }
+// }

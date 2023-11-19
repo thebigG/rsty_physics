@@ -55,6 +55,7 @@ func _ready():
 	self.add_to_group("reloadable")
 	var image = Image.load_from_file("res://assets/icon.svg")
 	var texture = ImageTexture.create_from_image(image)
+	Main2D.new()
 	
 	obj.texture = texture
 	obj.position = origin
