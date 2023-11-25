@@ -33,6 +33,15 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           push: true
           tags: thebigg1/rsty_physics:latest
+      - name: Build and push Cross Windows Image
+        id: docker_build_windows
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ./Dockerfile.windows
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          tags: thebigg1/rsty_physics_cross_windows:latest
 #          cache-from: type=local,src=/tmp/.buildx-cache
 #          cache-to: type=local,dest=/tmp/.buildx-cache
       - name: Image digest
