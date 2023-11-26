@@ -81,10 +81,6 @@ jobs:
           tags: thebigg1/rsty_physics_cross_windows:latest
 #          cache-from: type=local,src=/tmp/.buildx-cache
 #          cache-to: type=local,dest=/tmp/.buildx-cache
-      - name: Install Cross
-        run: cd rsty_physics && cargo install cross --git https://github.com/cross-rs/cross
-      - name: Windows Build
-        run: cd rsty_physics && make build_cross_windows
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }} && ls
@@ -140,10 +136,20 @@ jobs:
 #      image: thebigg1/rsty_physics:latest
 #      options: --user root
     steps:
-      #- name: Checkout
-      #  uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
       - name: test
         run: ls .
+      - name: Install Cross
+        run: cd rsty_physics && cargo install cross --git https://github.com/cross-rs/cross
+      - name: Windows Build
+        run: cd rsty_physics && make build_cross_windows
       - name: Upload to release page
         uses: svenstaro/upload-release-action@v2
         with:
