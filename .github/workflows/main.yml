@@ -143,7 +143,7 @@ jobs:
       #- name: Checkout
       #  uses: actions/checkout@v2
       - name: test
-        run: ls /__w/rsty_physics/rsty_physics && ls /home/lgomez
+        run: ls .
       - name: Upload to release page
         uses: svenstaro/upload-release-action@v2
         with:
