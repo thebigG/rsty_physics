@@ -39,4 +39,4 @@ RUN mv /home/lgomez/Godot_v4.1-stable_export_templates.tpz /home/lgomez/Godot_v4
 RUN cd /home/lgomez/ &&  unzip /home/lgomez/Godot_v4.1-stable_export_templates.zip
 #RUN mv /home/lgomez/templates  /home/lgomez/.local/share/godot/export_templates/4.1.beta6
 
-RUN cd /home/lgomez/rsty_physics && cargo clean && cargo +nightly build && cargo test
+#RUN cd /home/lgomez/rsty_physics && cargo clean && cargo +nightly build && cargo test

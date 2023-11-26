@@ -1,0 +1,2 @@
+[target.x86_64-pc-windows-gnu]
+image = "thebigg1/rsty_physics_cross_windows:latest"

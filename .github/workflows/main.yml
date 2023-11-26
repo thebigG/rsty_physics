@@ -33,6 +33,43 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           push: true
           tags: thebigg1/rsty_physics:latest
+
+#      - uses: actions/upload-artifact@v2
+#        with:
+#          name: ${{ github.job }}
+#          path: bin/*
+#          retention-days: 14
+# - name: Upload to release page
+#        uses: svenstaro/upload-release-action@v2
+#        with:
+#          repo_token: ${{ secrets.GITHUB_TOKEN }}
+#          file: rsty_physics/target/debug/librsty_physics.so
+#          asset_name: linux-x86_nightly_librsty_physics.so
+#          tag: rsty_physics-nightly-release
+#          overwrite: true
+#          body: "Bleeding edge release for those who like to live on the edge :)"
+
+
+
+  build-windows:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+#      - name: Cache Docker layers
+#        uses: actions/cache@v2
+#        with:
+#          path: /tmp/.buildx-cache
+#          key: ${{ runner.os }}-buildx-${{ github.sha }}
+#          restore-keys: |
+#            ${{ runner.os }}-buildx-
+      - uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: Build and push Cross Windows Image
         id: docker_build_windows
         uses: docker/build-push-action@v2
@@ -44,6 +81,11 @@ jobs:
           tags: thebigg1/rsty_physics_cross_windows:latest
 #          cache-from: type=local,src=/tmp/.buildx-cache
 #          cache-to: type=local,dest=/tmp/.buildx-cache
+      - name: Install Cross
+        run: cd rsty_physics && cargo install cross --git https://github.com/cross-rs/cross
+      - name: Windows Build
+        run: cd rsty_physics && make build_cross_windows
+
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }} && ls
 
@@ -62,8 +104,7 @@ jobs:
 #          overwrite: true
 #          body: "Bleeding edge release for those who like to live on the edge :)"
 
-
-  deploy-nightly:
+  deploy-nightly-linux:
     needs: build
     permissions:
       pull-requests: write
@@ -84,6 +125,31 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: /home/lgomez/rsty_physics/target/debug/librsty_physics.so
           asset_name: linux-x86_nightly_librsty_physics.so
+          tag: rsty_physics-nightly-release
+          overwrite: true
+          body: "Bleeding edge release for those who like to live on the edge :)"
+
+  deploy-nightly-windows:
+    needs: build-windows
+    permissions:
+      pull-requests: write
+      contents: write
+      repository-projects: write
+    runs-on: ubuntu-latest
+#    container:
+#      image: thebigg1/rsty_physics:latest
+#      options: --user root
+    steps:
+      #- name: Checkout
+      #  uses: actions/checkout@v2
+      - name: test
+        run: ls /__w/rsty_physics/rsty_physics && ls /home/lgomez
+      - name: Upload to release page
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: rsty_physics/target/x86_64-pc-windows-gnu/debug/rsty_physics.dll
+          asset_name: windows-x86_nightly_librsty_physics.dll
           tag: rsty_physics-nightly-release
           overwrite: true
           body: "Bleeding edge release for those who like to live on the edge :)"
