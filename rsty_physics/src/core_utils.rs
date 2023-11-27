@@ -1,4 +1,5 @@
-use godot::engine::IRefCounted;
+use godot::engine::{Animation, AnimationNode, AnimationNodeAnimation, IRefCounted};
+use std::cell::Ref;
 
 use godot::engine::RefCounted;
 use godot::prelude::*;
@@ -8,17 +9,24 @@ enum State {
     DEAD = 2,
 }
 
+// TODO:Implement when enum properties are supported
+// enum HZ_MODE {
+// 	UP = 1,
+// 	DOWN = 2,
+// };
+
 #[derive(GodotClass)]
 #[class(base=RefCounted)]
 pub struct AnimationUtils {
-    score: i64,
     #[base]
     base: Base<RefCounted>,
+    HZ_MODE: i32,
     max_health: real,
     zero_health: real,
     health: real,
     damage_interval: real,
     state: State,
+    // animation: Animation ,
 }
 #[godot_api]
 impl AnimationUtils {
@@ -36,6 +44,12 @@ impl AnimationUtils {
         if self.health <= self.zero_health {
             self.state = State::DEAD;
         }
+    }
+
+    #[func]
+    fn get_animation(&mut self) -> Gd<Animation> {
+        let a = Animation::new();
+        a
     }
 
     #[func]
@@ -77,12 +91,13 @@ impl IRefCounted for AnimationUtils {
     fn init(base: Base<Self::Base>) -> Self {
         AnimationUtils {
             base,
-            score: 0,
             max_health: 1.0,
             zero_health: 0.0,
             health: 0.0,
             damage_interval: 0.0,
             state: State::ALIVE,
+            // animation: Animation{ object_ptr: (), instance_id: () },
+            HZ_MODE: 1,
         }
     }
 }
