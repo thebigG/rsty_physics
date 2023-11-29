@@ -55,18 +55,25 @@ impl AnimationUtils {
     fn get_animation(
         &mut self,
         node_path: NodePath,
-        text: GString,
-        delimiter: GString,
+        text: String,
+        delimiter: String,
     ) -> Gd<Animation> {
         // Not sure if animation as a member of the struct makes much sense...
         // let  a = Animation::new();
         // a.get_length();
 
         let track_index = self.animation.add_track(animation::TrackType::TYPE_VALUE);
-        // self.animation.track_set_path(track_index, node_path);
-        // let current_position = 0.0;
-        // let current_text = GString::new();
-        // text.split(delimiter);
+        let tokens = text.split(&delimiter);
+        let mut current_text = String::new();
+        let mut current_transition = 0.0;
+        for token in tokens {
+            current_text = current_text.clone() + token + &delimiter.clone();
+            self.animation.track_insert_key(
+                track_index,
+                current_transition,
+                current_text.to_variant(),
+            );
+        }
         self.animation.clone()
     }
 
