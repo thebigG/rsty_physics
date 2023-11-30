@@ -1,9 +1,13 @@
-use godot::engine::{animation, Animation, AnimationNode, AnimationNodeAnimation, IRefCounted};
+use godot::engine::{
+    animation, Animation, AnimationNode, AnimationNodeAnimation, Curve2D, IRefCounted,
+};
 use std::borrow::Borrow;
 use std::cell::Ref;
 
 use godot::engine::RefCounted;
 use godot::prelude::*;
+// use godot::sys::VariantType::Vector2;
+use godot::builtin::Vector2;
 
 enum State {
     ALIVE = 1,
@@ -36,22 +40,6 @@ pub struct AnimationUtils {
 #[godot_api]
 impl AnimationUtils {
     #[func]
-    fn game_over(&mut self) {
-        println!("Game over!");
-    }
-
-    #[func]
-    fn damage(&mut self) {
-        if self.health <= self.zero_health {
-            return;
-        }
-        self.health -= self.damage_interval;
-        if self.health <= self.zero_health {
-            self.state = State::DEAD;
-        }
-    }
-
-    #[func]
     fn get_animation(
         &mut self,
         node_path: NodePath,
@@ -63,6 +51,7 @@ impl AnimationUtils {
         // a.get_length();
 
         let track_index = self.animation.add_track(animation::TrackType::TYPE_VALUE);
+        self.animation.track_set_path(track_index, node_path);
         let tokens = text.split(&delimiter);
         let mut current_text = String::new();
         let mut current_transition = 0.0;
@@ -77,37 +66,122 @@ impl AnimationUtils {
         self.animation.clone()
     }
 
+    ///
+    /// @brief AnimationUtils::h_line_pattern Draws a horizontal line on the path
+    /// that starts at origin that is length long.
+    /// @param path
+    /// @param origin
+    /// @param length
+    /// @return The last point that was added to curve.
     #[func]
-    fn get_health(&mut self) -> real {
-        self.health
+    fn h_line_pattern(&mut self, mut path: Gd<Curve2D>, origin: Vector2, length: f32) -> Vector2 {
+        let target = Vector2::new(origin.x + length, origin.y);
+        // path.add_point(origin, Vector2::new(0.0,0.0) , Vector2::new(0.0,0.0));
+        path.add_point(origin);
+        path.add_point(origin);
+        target
+    }
+    ///
+    /// @brief AnimationUtils::h_line_pattern Draws a horizontal line on the path
+    /// that starts at origin that is length long.
+    /// @param path
+    /// @param origin
+    /// @param length
+    /// @return The last point that was added to curve.
+    #[func]
+    fn v_line_pattern(&mut self, mut path: Gd<Curve2D>, origin: Vector2, length: f32) -> Vector2 {
+        let target = Vector2::new(origin.x, origin.y + length);
+        // path.add_point(origin, Vector2::new(0.0,0.0) , Vector2::new(0.0,0.0));
+        path.add_point(origin);
+        path.add_point(origin);
+        target
     }
 
+    ///
+    /// @brief AnimationUtils::h_line_pattern Draws a horizontal line on the path
+    /// that starts at origin that is length long.
+    /// @param path
+    /// @param origin
+    /// @param length
+    /// @return The last point that was added to curve.
     #[func]
-    fn get_damage_interval(&mut self) -> real {
-        self.damage_interval
-    }
+    fn hz_line_pattern(
+        &mut self,
+        mut path: Gd<Curve2D>,
+        origin: Vector2,
+        length: f32,
+        mode: i32,
+    ) -> Vector2 {
+        let mut target = Vector2::new(origin.x + length, origin.y + length);
+        // path.add_point(origin, Vector2::new(0.0,0.0) , Vector2::new(0.0,0.0));
 
-    #[func]
-    fn get_max_health(&mut self) -> real {
-        self.max_health
-    }
+        match mode {
+            2 => {
+                target = Vector2::new(origin.x + length, origin.y + length);
+            }
+            1 => {
+                target = Vector2::new(origin.x + length, origin.y - length);
+            }
 
-    #[func]
-    fn get_zero_health(&mut self) -> real {
-        self.zero_health
-    }
-
-    #[func]
-    fn set_damage_interval(&mut self, new_interval: real) {
-        self.damage_interval = new_interval;
-    }
-
-    #[func]
-    fn get_state(&mut self) -> i32 {
-        match self.state {
-            State::ALIVE => 1,
-            State::DEAD => 0,
+            m => {
+                // TODO: Need to change mode to enums instead of i32
+                // Maybe a better way of handling this is returning a Result...
+                panic!("Unsupported mode:{m}")
+            }
         }
+        path.add_point(origin);
+        path.add_point(target);
+        target
+    }
+
+    ///
+    /// @brief AnimationUtils::h_line_pattern Draws a horizontal line on the path
+    /// that starts at origin that is length long.
+    /// @param path
+    /// @param origin
+    /// @param length
+    /// @return The last point that was added to curve.
+    #[func]
+    fn rectangle_pattern(
+        &mut self,
+        path: Gd<Curve2D>,
+        origin: Vector2,
+        width: f32,
+        height: f32,
+    ) -> Vector2 {
+        let top = self.h_line_pattern(path.clone(), origin, width);
+        let right = self.v_line_pattern(path.clone(), top, height);
+        let bottom = self.h_line_pattern(path.clone(), right, -width);
+        let rect = self.h_line_pattern(path.clone(), right, -height);
+
+        rect
+    }
+
+    ///
+    /// @brief AnimationUtils::h_line_pattern Draws a horizontal line on the path
+    /// that starts at origin that is length long.
+    /// @param path
+    /// @param origin
+    /// @param length
+    /// @return The last point that was added to curve.
+    #[func]
+    fn zig_zag_pattern(
+        &mut self,
+        path: Gd<Curve2D>,
+        origin: Vector2,
+        length: f32,
+        zigs: i32,
+    ) -> Vector2 {
+        let mut last_origin = origin;
+        for zig in 0..zigs {
+            if (zig % 2 == 0) {
+                last_origin = self.hz_line_pattern(path.clone(), last_origin, length, 2);
+            } else {
+                last_origin = self.hz_line_pattern(path.clone(), last_origin, length, 1);
+            }
+        }
+
+        return last_origin;
     }
 }
 
