@@ -87,7 +87,7 @@ impl ICharacterBody2D for HealthBody2D {
             score: 0,
             MAX_HEALTH: 1.0,
             ZERO_HEALTH: 0.0,
-            health: 0.0,
+            health: 1.0,
             damage_interval: 0.0,
             state: 1,
         }
