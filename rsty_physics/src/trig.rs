@@ -522,7 +522,7 @@ impl Main2D {
     }
 
     #[func]
-    fn get_sin_full_circle_2dvectors(
+    pub fn get_sin_full_circle_2dvectors(
         &mut self,
         degrees_delta: i32,
         scale: i32,

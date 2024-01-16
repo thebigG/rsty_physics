@@ -3,11 +3,15 @@ use godot::engine::{
 };
 use std::borrow::Borrow;
 use std::cell::Ref;
+use std::f32::consts::PI;
 
 use godot::engine::RefCounted;
 use godot::prelude::*;
 // use godot::sys::VariantType::Vector2;
 use godot::builtin::Vector2;
+use godot::engine::utilities::{deg_to_rad, sin};
+
+use crate::trig::Main2D;
 
 enum State {
     ALIVE = 1,
@@ -182,6 +186,46 @@ impl AnimationUtils {
         }
 
         return last_origin;
+    }
+
+    ///
+    /// @brief AnimationUtils::h_line_pattern Draws a horizontal line on the path
+    /// that starts at origin that is length long.
+    /// @param path
+    /// @param origin
+    /// @param length
+    /// @return The last point that was added to curve.
+    #[func]
+    fn circle_pattern(
+        &mut self,
+        mut path: Gd<Curve2D>,
+        origin: Vector2,
+        width: f32,
+        height: f32,
+        degrees_delta: i32,
+        scale: i32,
+        number_of_phases: i32,
+    ) -> () {
+        let mut last_origin = origin;
+
+        let mut points = array![Vector2::new(origin.x, origin.y).to_variant()];
+        let mut i: f32 = 0.0;
+        // TODO:cleanup and remove all these casts
+        let scale_f32: f32 = scale as f32;
+        let phase = 2.0 * PI as f32;
+        while i < (number_of_phases as f32 * phase) {
+            let y: f32 = sin(i as f64) as f32;
+            points.push(
+                Vector2::new((i * scale_f32) as f32, (y as f32 * scale_f32) as f32).to_variant(),
+            );
+            path.add_point(Vector2::new(
+                (i * scale_f32) as f32,
+                (y as f32 * scale_f32) as f32,
+            ));
+            i += deg_to_rad(degrees_delta as f64) as f32;
+        }
+
+        // last_origin
     }
 }
 
