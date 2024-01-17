@@ -200,8 +200,6 @@ impl AnimationUtils {
         &mut self,
         mut path: Gd<Curve2D>,
         origin: Vector2,
-        width: f32,
-        height: f32,
         degrees_delta: i32,
         scale: i32,
         number_of_phases: i32,
