@@ -82,7 +82,7 @@ impl AnimationUtils {
         let target = Vector2::new(origin.x + length, origin.y);
         // path.add_point(origin, Vector2::new(0.0,0.0) , Vector2::new(0.0,0.0));
         path.add_point(origin);
-        path.add_point(origin);
+        path.add_point(target);
         target
     }
     ///
@@ -97,7 +97,7 @@ impl AnimationUtils {
         let target = Vector2::new(origin.x, origin.y + length);
         // path.add_point(origin, Vector2::new(0.0,0.0) , Vector2::new(0.0,0.0));
         path.add_point(origin);
-        path.add_point(origin);
+        path.add_point(target);
         target
     }
 
@@ -108,6 +108,7 @@ impl AnimationUtils {
     /// @param origin
     /// @param length
     /// @return The last point that was added to curve.
+    /// TODO:Should change function name to diagonal
     #[func]
     fn hz_line_pattern(
         &mut self,
