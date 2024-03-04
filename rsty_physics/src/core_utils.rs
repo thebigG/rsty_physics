@@ -54,7 +54,7 @@ impl AnimationUtils {
         // let  a = Animation::new();
         // a.get_length();
 
-        let track_index = self.animation.add_track(animation::TrackType::TYPE_VALUE);
+        let track_index = self.animation.add_track(animation::TrackType::VALUE);
         self.animation.track_set_path(track_index, node_path);
         let tokens = text.split(&delimiter);
         let mut current_text = String::new();
@@ -254,7 +254,7 @@ impl INode for AnimationUtils {
             health: 0.0,
             damage_interval: 0.0,
             state: State::ALIVE,
-            animation: Animation::new(),
+            animation: Animation::new_gd(),
             HZ_MODE: 1,
         }
     }
