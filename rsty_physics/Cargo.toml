@@ -9,10 +9,11 @@ crate-type = ["cdylib"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+
 [dependencies]
 # godot = { git = "https://github.com/thebigG/gdextension.git", branch = "138_ref_count_fixes"}
 # godot = { git = "https://github.com/godot-rust/gdextension", branch = "master"}
- godot = { git = "https://github.com/godot-rust/gdextension", rev ="d2de819"}
+ godot = { git = "https://github.com/godot-rust/gdextension", rev ="d2de819", features = ["experimental-wasm", "lazy-function-tables"]}
 rand = "0.8"
 #godot = { path = "../../../godot", features = ["minimal"] }
 #godot = { path = "../../projects/gdextension_array_debugging/gdextension/godot" }
