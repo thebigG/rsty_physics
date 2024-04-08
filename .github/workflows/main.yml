@@ -85,6 +85,42 @@ jobs:
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }} && ls
 
+
+
+  build-wasm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+#      - name: Cache Docker layers
+#        uses: actions/cache@v2
+#        with:
+#          path: /tmp/.buildx-cache
+#          key: ${{ runner.os }}-buildx-${{ github.sha }}
+#          restore-keys: |
+#            ${{ runner.os }}-buildx-
+      - uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: Build and push WASM Image
+        id: docker_build_wasm
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ./Dockerfile.wasm
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          tags: thebigg1/rsty_physics_wasm:latest
+#          cache-from: type=local,src=/tmp/.buildx-cache
+#          cache-to: type=local,dest=/tmp/.buildx-cache
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }} && ls
+
 #      - uses: actions/upload-artifact@v2
 #        with:
 #          name: ${{ github.job }}
@@ -156,6 +192,38 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: rsty_physics/target/x86_64-pc-windows-gnu/debug/rsty_physics.dll
           asset_name: windows-x86_nightly_librsty_physics.dll
+          tag: rsty_physics-nightly-release
+          overwrite: true
+          body: "Bleeding edge release for those who like to live on the edge :)"
+
+
+  deploy-nightly-wasm:
+    needs: build-wasm
+    permissions:
+      pull-requests: write
+      contents: write
+      repository-projects: write
+    runs-on: ubuntu-latest
+    container:
+      image: thebigg1/rsty_physics_wasm:latest
+      options: --user root
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+      - name: WASM Build
+        run: cd rsty_physics && make build_wasm
+      - name: Upload to release page
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: rsty_physics/target/wasm32-unknown-emscripten/debug/rsty_physics.wasm
+          asset_name: wasm32-unknown_nightly_librsty_physics.wasm
           tag: rsty_physics-nightly-release
           overwrite: true
           body: "Bleeding edge release for those who like to live on the edge :)"
