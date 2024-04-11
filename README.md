@@ -1,3 +1,5 @@
+[![CI Build](https://github.com/thebigG/rsty_physics/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/thebigG/rsty_physics/actions/workflows/main.yml)
+
 # rsty_physics
 Exploring Physics with Godot4 and Rust.
 

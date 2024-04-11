@@ -21,7 +21,7 @@ build_cross_windows_image:
 
 
 build_wasm_image:
-	docker build -f Dockerfile.wasm . --no-cache -t rsty_physics_cross_windows:rsty_physics_cross_windows
+	docker build -f Dockerfile.wasm . --no-cache -t rsty_physics_wasm:rsty_physics_wasm
 
 login:
 	docker login
