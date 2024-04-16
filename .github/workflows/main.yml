@@ -206,7 +206,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: thebigg1/rsty_physics_wasm:latest
-      options: --user lgomez
+      options: --user root
     steps:
       - name: Checkout
         uses: actions/checkout@v2
