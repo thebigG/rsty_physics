@@ -216,8 +216,19 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
+      - name: install emsdk
+        run: git clone https://github.com/emscripten-core/emsdk.git
+      - name: Pull emsdk
+        run: cd emsdk && git pull
+      - name: Install emsdk
+        run: cd emsdk && ./emsdk install latest
+      - name: Activate emsdk
+        run: cd emsdk && ./emsdk activate latest
+      - name: test
+        run: ls .
       - name: WASM Build
-        run: cd rsty_physics && make build_wasm
+        run: source emsdk/emsdk_env.sh && cd rsty_physics  && make build_wasm
+        shell: bash
       - name: Upload to release page
         uses: svenstaro/upload-release-action@v2
         with:
