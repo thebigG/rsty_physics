@@ -45,6 +45,17 @@ impl HealthBody2D {
     }
 
     #[func]
+    fn heal(&mut self) {
+        if self.health <= self.ZERO_HEALTH {
+            return;
+        }
+
+        if self.health < self.MAX_HEALTH {
+            self.health += self.damage_interval;
+        }
+    }
+
+    #[func]
     fn get_health(&mut self) -> real {
         self.health
     }
