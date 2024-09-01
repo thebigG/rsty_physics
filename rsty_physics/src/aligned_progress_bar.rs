@@ -6,7 +6,6 @@ use godot::prelude::*;
 #[derive(GodotClass)]
 #[class(base=ProgressBar)]
 pub struct AlignedProgressBar {
-    #[base]
     base: Base<ProgressBar>,
     #[var(get = get_alignment, set = set_alignment)]
     alignment: i32,

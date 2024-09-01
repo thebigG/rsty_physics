@@ -1,4 +1,4 @@
-FROM rust:1.70
+FROM rust:1.80
 RUN apt update &&  \
     apt-get -y install clang && \
     apt-get -y install libclang-dev && \
@@ -29,7 +29,7 @@ RUN cd /home/lgomez/ && wget https://github.com/godotengine/godot/releases/downl
 #These might be useful for wasm deployments in the future.
 #RUN rustup target add wasm32-unknown-unknown
 #RUN cargo install trunk
-env GODOT4_BIN=/home/lgomez/Godot_v${GODOT_VERSION}-stable_linux.x86_64
+ENV GODOT4_BIN=/home/lgomez/Godot_v${GODOT_VERSION}-stable_linux.x86_64
 #wget https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_export_templates.tpz
 RUN cd /home/lgomez/ && wget https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_export_templates.tpz
 RUN mv /home/lgomez/Godot_v${GODOT_VERSION}-stable_export_templates.tpz /home/lgomez/Godot_v${GODOT_VERSION}-stable_export_templates.zip

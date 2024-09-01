@@ -159,6 +159,7 @@ jobs:
           asset_name: linux-x86_nightly_librsty_physics.so
           tag: rsty_physics-nightly-release
           overwrite: true
+
           body: "Bleeding edge release for those who like to live on the edge :)"
 
   deploy-nightly-windows:

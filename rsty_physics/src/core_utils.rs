@@ -1,17 +1,10 @@
-use godot::engine::{
-    animation, Animation, AnimationNode, AnimationNodeAnimation, Curve2D, IRefCounted,
-};
-use std::borrow::Borrow;
-use std::cell::Ref;
+use godot::engine::{animation, Animation, Curve2D};
 use std::f32::consts::PI;
 
-use godot::engine::RefCounted;
 use godot::prelude::*;
 // use godot::sys::VariantType::Vector2;
 use godot::builtin::Vector2;
 use godot::engine::utilities::{deg_to_rad, sin};
-
-use crate::trig::Main2D;
 
 enum State {
     ALIVE = 1,
@@ -31,7 +24,6 @@ pub struct AnimationData {
 #[derive(GodotClass)]
 #[class(base=Node)]
 pub struct AnimationUtils {
-    #[base]
     base: Base<Node>,
     HZ_MODE: i32,
     max_health: real,
@@ -179,7 +171,7 @@ impl AnimationUtils {
     ) -> Vector2 {
         let mut last_origin = origin;
         for zig in 0..zigs {
-            if (zig % 2 == 0) {
+            if zig % 2 == 0 {
                 last_origin = self.hz_line_pattern(path.clone(), last_origin, length, 2);
             } else {
                 last_origin = self.hz_line_pattern(path.clone(), last_origin, length, 1);

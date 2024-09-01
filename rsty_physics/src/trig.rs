@@ -1,19 +1,10 @@
 use godot::builtin::Vector2;
-use godot::engine::node::InternalMode;
-use godot::engine::packed_scene::GenEditState;
-use godot::engine::utilities::{atan2, cos, deg_to_rad, pow, sin, sqrt};
-use godot::engine::{ILine2D, Line2D, Marker2D, PathFollow2D, RigidBody2D, Timer};
+use godot::engine::utilities::{cos, deg_to_rad, sin};
+use godot::engine::{ILine2D, Line2D};
 use godot::prelude::*;
-use godot::private::You_forgot_the_attribute__godot_api;
-use std::borrow::Borrow;
 use std::f64::consts::PI;
 
-use godot::builtin::array;
-use godot::builtin::meta::ClassName;
-use godot::builtin::VariantType::PackedVector2Array;
 use godot::prelude::Variant;
-use godot::sys::types::OpaquePackedVector2Array;
-
 ///A particle made up of velocity and position
 // #[derive(GodotClass)]
 // #[class(base=Node)]
@@ -312,8 +303,6 @@ use godot::sys::types::OpaquePackedVector2Array;
 #[derive(GodotClass)]
 #[class(base=Line2D)]
 pub struct SineWave2D {
-    score: i64,
-    #[base]
     base: Base<Line2D>,
 }
 #[godot_api]
@@ -399,7 +388,6 @@ impl ILine2D for SineWave2D {
     fn init(base: Base<Line2D>) -> Self {
         SineWave2D {
             // mob_scene: PackedScene::new(),
-            score: 0,
             base,
             // music: None,
             // death_sound: None,
@@ -422,19 +410,16 @@ impl ILine2D for SineWave2D {
 // Deriving GodotClass makes the class available to Godot
 #[derive(GodotClass)]
 // #[class(init)]
-#[class(base=Node2D)]
+#[class(base=Line2D)]
 pub struct Main2D {
-    score: i64,
-    #[base]
-    base: Base<Node2D>,
+    base: Base<Line2D>,
 }
 
 #[godot_api]
 impl ILine2D for Main2D {
-    fn init(base: Base<Node2D>) -> Self {
+    fn init(base: Base<Line2D>) -> Self {
         Main2D {
             // mob_scene: PackedScene::new(),
-            score: 0,
             base,
             // music: None,
             // death_sound: None,

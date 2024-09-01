@@ -12,8 +12,6 @@ use godot::prelude::*;
 #[derive(GodotClass)]
 #[class(base=CharacterBody2D)]
 pub struct HealthBody2D {
-    score: i64,
-    #[base]
     base: Base<CharacterBody2D>,
     #[var(get = get_max_health)]
     MAX_HEALTH: real,
@@ -95,7 +93,6 @@ impl ICharacterBody2D for HealthBody2D {
     fn init(base: Base<Self::Base>) -> Self {
         HealthBody2D {
             base,
-            score: 0,
             MAX_HEALTH: 1.0,
             ZERO_HEALTH: 0.0,
             health: 1.0,
