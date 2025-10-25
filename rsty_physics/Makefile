@@ -8,7 +8,7 @@ build_cross_windows:
 	cross build --target x86_64-pc-windows-gnu
 
 build_wasm:
-	cargo +nightly build  --target wasm32-unknown-emscripten -Zbuild-std
+	cargo +nightly build  --target wasm32-unknown-emscripten --features godot/experimental-wasm,godot/lazy-function-tables -Zbuild-std
 
 
 build_all:
