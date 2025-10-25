@@ -1,4 +1,4 @@
-FROM rust:1.80
+FROM rust:1.87
 RUN apt update &&  \
     apt-get -y install clang && \
     apt-get -y install libclang-dev && \
