@@ -2,7 +2,7 @@ name: CI Docker Build
 
 on:
   push:
-    branches: [main]
+    branches: [godot_rust_0.4.1]
 
 jobs:
   build:
