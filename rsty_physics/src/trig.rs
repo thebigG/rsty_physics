@@ -1,9 +1,9 @@
 use godot::builtin::Vector2;
-use godot::global::{cos, deg_to_rad, sin};
 use godot::classes::{ILine2D, Line2D};
+use godot::global::{cos, deg_to_rad, sin};
+use godot::prelude::Variant;
 use godot::prelude::*;
 use std::f64::consts::PI;
-use godot::prelude::Variant;
 ///A particle made up of velocity and position
 // #[derive(GodotClass)]
 // #[class(base=Node)]
@@ -365,9 +365,9 @@ impl SineWave2D {
     }
 
     #[func]
-    fn draw_wave(&mut self) -> Array<Variant> {
+    fn draw_wave(&mut self) -> Array<Vector2> {
         // let array = Array::from(&[1, 2]);
-        let array = Array::from(array![Vector2::new(0.0, 100.0).to_variant()]);
+        let array = Array::from(array![Vector2::new(0.0, 100.0)]);
         println!("draw_wave1...");
 
         array
@@ -511,18 +511,19 @@ impl Main2D {
         degrees_delta: i32,
         scale: i32,
         number_of_phases: i32,
-    ) -> Array<Variant> {
+    ) -> Array<Vector2> {
         // let mut points = Array::from(&[Vector2::new(0.0, 100.0)]);
-        let mut points = array![Vector2::new(0.0, 100.0).to_variant()];
+        let mut points = array![Vector2::new(0.0, 100.0)];
         let mut i: f32 = 0.0;
         // TODO:cleanup and remove all these casts
         let scale_f32: f32 = scale as f32;
         let phase = 2.0 * PI as f32;
         while i < (number_of_phases as f32 * phase) {
             let y: f32 = sin(i as f64) as f32;
-            points.push(
-                Vector2::new((i * scale_f32) as f32, (y as f32 * scale_f32) as f32).to_variant(),
-            );
+            points.push(Vector2::new(
+                (i * scale_f32) as f32,
+                (y as f32 * scale_f32) as f32,
+            ));
             i += deg_to_rad(degrees_delta as f64) as f32;
         }
         points
@@ -533,17 +534,18 @@ impl Main2D {
         degrees_delta: i32,
         scale: i32,
         number_of_phases: i32,
-    ) -> Array<Variant> {
-        let mut points = array![Vector2::new(0.0, 100.0).to_variant()];
+    ) -> Array<Vector2> {
+        let mut points = array![Vector2::new(0.0, 100.0)];
         let mut i: f32 = 0.0;
         // TODO:cleanup and remove all these casts
         let scale_f32: f32 = scale as f32;
         let phase = 2.0 * PI as f32;
         while i < (number_of_phases as f32 * phase) {
             let y: f32 = cos(i as f64) as f32;
-            points.push(
-                Vector2::new((i * scale_f32) as f32, (y as f32 * scale_f32) as f32).to_variant(),
-            );
+            points.push(Vector2::new(
+                (i * scale_f32) as f32,
+                (y as f32 * scale_f32) as f32,
+            ));
             i += deg_to_rad(degrees_delta as f64) as f32;
         }
         points
