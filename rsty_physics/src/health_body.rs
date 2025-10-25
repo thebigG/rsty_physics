@@ -1,6 +1,6 @@
-use godot::engine::ICharacterBody2D;
+use godot::classes::ICharacterBody2D;
 
-use godot::engine::CharacterBody2D;
+use godot::classes::CharacterBody2D;
 use godot::prelude::*;
 
 // TODO:Implement when enum properties are supported

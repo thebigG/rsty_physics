@@ -1,10 +1,10 @@
-use godot::engine::{animation, Animation, Curve2D};
+use godot::classes::{animation, Animation, Curve2D};
 use std::f32::consts::PI;
 
 use godot::prelude::*;
 // use godot::sys::VariantType::Vector2;
 use godot::builtin::Vector2;
-use godot::engine::utilities::{deg_to_rad, sin};
+use godot::global::{deg_to_rad, sin};
 
 enum State {
     ALIVE = 1,
@@ -56,7 +56,7 @@ impl AnimationUtils {
             self.animation.track_insert_key(
                 track_index,
                 current_transition,
-                current_text.to_variant(),
+                &current_text.to_variant(),
             );
         }
         self.animation.clone()

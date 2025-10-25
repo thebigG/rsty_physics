@@ -1,9 +1,8 @@
 use godot::builtin::Vector2;
-use godot::engine::utilities::{cos, deg_to_rad, sin};
-use godot::engine::{ILine2D, Line2D};
+use godot::global::{cos, deg_to_rad, sin};
+use godot::classes::{ILine2D, Line2D};
 use godot::prelude::*;
 use std::f64::consts::PI;
-
 use godot::prelude::Variant;
 ///A particle made up of velocity and position
 // #[derive(GodotClass)]
