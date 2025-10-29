@@ -29,7 +29,7 @@ RUN #rustup toolchain install nightly
 RUN rustup component add rustfmt
 RUN rustfmt --check /home/lgomez/rsty_physics/src/*.rs
 
-ARG GODOT_VERSION=4.2.2
+ARG GODOT_VERSION=4.5.1
 RUN cd /home/lgomez/ && wget https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip \
     && unzip Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
 #These might be useful for wasm deployments in the future.

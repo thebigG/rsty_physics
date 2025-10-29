@@ -17,7 +17,7 @@ RUN apt update &&  \
 
 RUN useradd -ms /bin/bash -G sudo lgomez
 USER lgomez
-ARG GODOT_VERSION=4.2.2
+ARG GODOT_VERSION=4.5.1
 WORKDIR /home/lgomez
 COPY --chown=lgomez:lgomez . /home/lgomez
 RUN rustup component add rustfmt

@@ -19,7 +19,7 @@ RUN echo "source /home/lgomez/emsdk/emsdk_env.sh" >> /root/.bashrc
 RUN useradd -ms /bin/bash -G sudo lgomez
 
 USER lgomez
-ARG GODOT_VERSION=4.2.2
+ARG GODOT_VERSION=4.5.1
 WORKDIR /home/lgomez
 
 
