@@ -1,10 +1,10 @@
-use godot::engine::{animation, Animation, Curve2D};
+use godot::classes::{animation, Animation, Curve2D};
 use std::f32::consts::PI;
 
 use godot::prelude::*;
 // use godot::sys::VariantType::Vector2;
 use godot::builtin::Vector2;
-use godot::engine::utilities::{deg_to_rad, sin};
+use godot::global::{deg_to_rad, sin};
 
 enum State {
     ALIVE = 1,
@@ -35,6 +35,13 @@ pub struct AnimationUtils {
 }
 #[godot_api]
 impl AnimationUtils {
+    ///
+    /// @brief AnimationUtils::get_animation Animates a string (text). Useful for presenting narration in a game.
+    /// that starts at origin that is length long.
+    /// @param node_path string path to node which will be animated
+    /// @param text
+    /// @param delimiter
+    /// @return The animation with the text divided into tracks.
     #[func]
     fn get_animation(
         &mut self,
@@ -47,7 +54,8 @@ impl AnimationUtils {
         // a.get_length();
 
         let track_index = self.animation.add_track(animation::TrackType::VALUE);
-        self.animation.track_set_path(track_index, node_path);
+        self.animation
+            .track_set_path(track_index, &node_path.to_string());
         let tokens = text.split(&delimiter);
         let mut current_text = String::new();
         let mut current_transition = 0.0;
@@ -56,7 +64,7 @@ impl AnimationUtils {
             self.animation.track_insert_key(
                 track_index,
                 current_transition,
-                current_text.to_variant(),
+                &current_text.to_variant(),
             );
         }
         self.animation.clone()
@@ -199,16 +207,17 @@ impl AnimationUtils {
     ) -> () {
         let mut last_origin = origin;
 
-        let mut points = array![Vector2::new(origin.x, origin.y).to_variant()];
+        let mut points = array![Vector2::new(origin.x, origin.y)];
         let mut i: f32 = 0.0;
         // TODO:cleanup and remove all these casts
         let scale_f32: f32 = scale as f32;
         let phase = 2.0 * PI as f32;
         while i < (number_of_phases as f32 * phase) {
             let y: f32 = sin(i as f64) as f32;
-            points.push(
-                Vector2::new((i * scale_f32) as f32, (y as f32 * scale_f32) as f32).to_variant(),
-            );
+            points.push(Vector2::new(
+                (i * scale_f32) as f32,
+                (y as f32 * scale_f32) as f32,
+            ));
             path.add_point(Vector2::new(
                 (i * scale_f32) as f32,
                 (y as f32 * scale_f32) as f32,

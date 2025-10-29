@@ -1,6 +1,6 @@
-use godot::engine::IProgressBar;
+use godot::classes::IProgressBar;
 
-use godot::engine::ProgressBar;
+use godot::classes::ProgressBar;
 use godot::prelude::*;
 
 #[derive(GodotClass)]
